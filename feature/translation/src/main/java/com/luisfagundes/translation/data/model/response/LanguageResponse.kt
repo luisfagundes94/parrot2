@@ -2,7 +2,7 @@ package com.luisfagundes.translation.data.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class LanguagesResponse(
+data class LanguageListResponse(
     @SerializedName("languages")
     val languages: List<LanguageResponse>
 )
