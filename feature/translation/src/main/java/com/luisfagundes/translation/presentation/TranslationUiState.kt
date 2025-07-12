@@ -28,6 +28,7 @@ internal data class TranslationUiState(
 
     fun setError(message: String) = this.copy(
         isLoading = false,
-        errorMessage = message
+        errorMessage = message,
+        translatedText = ""
     )
 }
