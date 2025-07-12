@@ -4,6 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.luisfagundes.common.dispatcher.AppDispatcher.IO
 import com.luisfagundes.common.dispatcher.Dispatcher
 import com.luisfagundes.common.presentation.ViewModel
+import com.luisfagundes.common.provider.ResourceProvider
+import com.luisfagundes.translation.R
 import com.luisfagundes.translation.domain.model.Language
 import com.luisfagundes.translation.domain.model.Translation
 import com.luisfagundes.translation.domain.model.TranslationParams
@@ -21,20 +23,25 @@ import javax.inject.Inject
 internal class TranslationViewModel @Inject constructor(
     private val getSupportedLanguageListUseCase: GetSupportedLanguageListUseCase,
     private val translateTextUseCase: TranslateTextUseCase,
+    private val resourceProvider: ResourceProvider,
     @param:Dispatcher(IO) private val dispatcher: CoroutineDispatcher
 ) : ViewModel<TranslationUiState>(
     initialState = TranslationUiState()
 ) {
-    fun translate(text: String, targetLang: Language) = viewModelScope.launch {
-        if (text.count() < 2) return@launch
+    fun translate(text: String) = viewModelScope.launch {
+        if (text.count() < 2) {
+            setErrorState(resourceProvider.getString(R.string.min_text_error))
+            return@launch
+        }
         val params = TranslationParams(
             text = listOf(text),
-            targetLanguage = targetLang.code
+            sourceLanguage = uiState.value.languagePair.first.code,
+            targetLanguage = uiState.value.languagePair.second.code
         )
         translateTextUseCase.invoke(params)
             .flowOn(dispatcher)
             .onStart { setLoadingState() }
-            .catch { throwable -> setErrorState(throwable) }
+            .catch { throwable -> setErrorState(throwable.toString()) }
             .collect { translationList -> setSuccessState(translationList) }
     }
 
@@ -42,8 +49,7 @@ internal class TranslationViewModel @Inject constructor(
         updateState { state -> state.setLoading(true) }
     }
 
-    private fun setErrorState(throwable: Throwable) {
-        val message = throwable.localizedMessage ?: throwable.toString()
+    private fun setErrorState(message: String) {
         updateState { state -> state.setError(message) }
     }
 
