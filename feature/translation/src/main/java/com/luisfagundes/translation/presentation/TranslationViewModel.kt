@@ -1,7 +1,7 @@
 package com.luisfagundes.translation.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.luisfagundes.common.dispatcher.AppDispatcher
+import com.luisfagundes.common.dispatcher.AppDispatcher.IO
 import com.luisfagundes.common.dispatcher.Dispatcher
 import com.luisfagundes.common.presentation.ViewModel
 import com.luisfagundes.translation.domain.model.Translation
@@ -10,7 +10,6 @@ import com.luisfagundes.translation.domain.usecase.GetSupportedLanguageListUseCa
 import com.luisfagundes.translation.domain.usecase.TranslateTextUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
@@ -21,7 +20,7 @@ import javax.inject.Inject
 class TranslationViewModel @Inject constructor(
     private val getSupportedLanguageListUseCase: GetSupportedLanguageListUseCase,
     private val translateTextUseCase: TranslateTextUseCase,
-    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
+    @param:Dispatcher(IO) private val dispatcher: CoroutineDispatcher
 ) : ViewModel<TranslationUiState>(
     initialState = TranslationUiState()
 ) {
@@ -31,7 +30,7 @@ class TranslationViewModel @Inject constructor(
             targetLanguage = targetLang
         )
         translateTextUseCase.invoke(params)
-            .flowOn(coroutineDispatcher)
+            .flowOn(dispatcher)
             .onStart { showLoading() }
             .catch { throwable -> showError(throwable) }
             .collect { translationList -> showResult(translationList) }
