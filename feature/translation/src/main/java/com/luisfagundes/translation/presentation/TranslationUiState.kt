@@ -24,6 +24,7 @@ internal data class TranslationUiState(
     fun setLoading(loading: Boolean) = this.copy(
         isLoading = loading,
         errorMessage = "",
+        translatedText = ""
     )
 
     fun setError(message: String) = this.copy(
