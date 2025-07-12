@@ -14,4 +14,20 @@ data class TranslationUiState(
     val translatedText: String = "",
     val isLoading: Boolean = false,
     val errorMessage: String = "",
-) : UiState
+) : UiState {
+    fun setResult(translatedText: String) = this.copy(
+        translatedText = translatedText,
+        isLoading = false,
+        errorMessage = ""
+    )
+
+    fun setLoading(loading: Boolean) = this.copy(
+        isLoading = loading,
+        errorMessage = "",
+    )
+
+    fun setError(message: String) = this.copy(
+        isLoading = false,
+        errorMessage = message
+    )
+}
