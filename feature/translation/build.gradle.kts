@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.library)
@@ -9,6 +11,10 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+val apikeyPropertiesFile = rootProject.file("apikey.properties")
+val apikeyProperties = Properties()
+apikeyProperties.load(FileInputStream(apikeyPropertiesFile))
+
 android {
     namespace = "com.luisfagundes.translation"
     compileSdk = 36
@@ -18,6 +24,12 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField(
+            type = "String",
+            name = "DEEPL_API_KEY",
+            value = apikeyProperties["DEEPL_API_KEY"] as String
+        )
     }
 
     buildTypes {
