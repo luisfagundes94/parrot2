@@ -11,7 +11,7 @@ abstract class ViewModel<State : UiState>(
 
     val uiState = viewModelState.state
 
-    protected fun updateState(block: State.() -> State) {
-        viewModelState.update { it.block() }
+    protected fun updateState(state: (State) -> State) {
+        viewModelState.updateState(state)
     }
 }

@@ -7,7 +7,7 @@ class State<State : UiState>(initialState: State) {
     private val _state = MutableStateFlow(initialState)
     val state: StateFlow<State> get() = _state
 
-    fun update(state: (State) -> State) {
+    fun updateState(state: (State) -> State) {
         _state.value = state(_state.value)
     }
 }
