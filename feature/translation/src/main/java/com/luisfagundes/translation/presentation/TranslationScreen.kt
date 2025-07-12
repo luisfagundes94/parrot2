@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,9 +14,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.luisfagundes.designsystem.theme.spacing
+import com.luisfagundes.translation.R
 import com.luisfagundes.translation.presentation.components.LanguageSelector
 import com.luisfagundes.translation.presentation.components.TranslationInputField
 import com.luisfagundes.translation.presentation.components.TranslationResults
@@ -27,9 +31,7 @@ internal fun TranslationRoute(
 
     TranslationScreen(
         uiState = uiState,
-        onInputTextChange = { text ->
-            viewModel.translate(text, targetLang = uiState.languagePair.second)
-        },
+        onTranslateButtonClick = viewModel::translate,
         modifier = Modifier
             .padding(MaterialTheme.spacing.default)
             .fillMaxWidth()
@@ -40,14 +42,10 @@ internal fun TranslationRoute(
 internal fun TranslationScreen(
     uiState: TranslationUiState,
     modifier: Modifier = Modifier,
-    onInputTextChange: (String) -> Unit,
+    onTranslateButtonClick: (String) -> Unit,
 ) {
     val textStyle = MaterialTheme.typography.headlineMedium
     var inputText by remember { mutableStateOf("") }
-
-    LaunchedEffect(inputText) {
-        onInputTextChange(inputText)
-    }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
@@ -67,6 +65,13 @@ internal fun TranslationScreen(
             textStyle = textStyle,
             modifier = Modifier.fillMaxWidth()
         )
+        Button(
+            onClick = { onTranslateButtonClick(inputText) }
+        ) {
+            Text(
+                text = stringResource(R.string.translate)
+            )
+        }
         TranslationResults(
             uiState = uiState,
             textStyle = textStyle
