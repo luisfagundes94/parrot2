@@ -37,7 +37,7 @@ internal fun TranslationResults(
             Text(
                 text = uiState.translatedText,
                 style = textStyle,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }
