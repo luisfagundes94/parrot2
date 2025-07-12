@@ -24,28 +24,28 @@ internal class TranslationViewModel @Inject constructor(
 ) : ViewModel<TranslationUiState>(
     initialState = TranslationUiState()
 ) {
-    fun translateText(text: String, targetLang: String) = viewModelScope.launch {
+    fun translate(text: String, targetLang: String) = viewModelScope.launch {
         val params = TranslationParams(
             text = listOf(text),
             targetLanguage = targetLang
         )
         translateTextUseCase.invoke(params)
             .flowOn(dispatcher)
-            .onStart { showLoading() }
-            .catch { throwable -> showError(throwable) }
-            .collect { translationList -> showResult(translationList) }
+            .onStart { setLoadingState() }
+            .catch { throwable -> setErrorState(throwable) }
+            .collect { translationList -> setSuccessState(translationList) }
     }
 
-    private fun showLoading() {
+    private fun setLoadingState() {
         updateState { state -> state.setLoading(true) }
     }
 
-    private fun showError(throwable: Throwable) {
+    private fun setErrorState(throwable: Throwable) {
         val message = throwable.localizedMessage ?: throwable.toString()
         updateState { state -> state.setError(message) }
     }
 
-    private fun showResult(translationList: List<Translation>) {
+    private fun setSuccessState(translationList: List<Translation>) {
         updateState { state -> state.setResult(translationList.toString()) }
     }
 }
