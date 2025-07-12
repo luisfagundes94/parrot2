@@ -4,8 +4,9 @@ import com.luisfagundes.common.mapper.Mapper
 import com.luisfagundes.translation.data.model.response.LanguageListResponse
 import com.luisfagundes.translation.data.model.response.LanguageResponse
 import com.luisfagundes.translation.domain.model.Language
+import javax.inject.Inject
 
-class LanguageMapper : Mapper<LanguageListResponse, List<Language>> {
+class LanguageMapper @Inject constructor() : Mapper<LanguageListResponse, List<Language>> {
     override fun map(source: LanguageListResponse): List<Language> {
         return source.languages.map { response -> response.mapToLanguage() }
     }
