@@ -29,7 +29,7 @@ internal fun TranslationResults(
             Text(
                 text = uiState.errorMessage,
                 color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyLarge
             )
         }
 
