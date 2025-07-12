@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.luisfagundes.common.dispatcher.AppDispatcher.IO
 import com.luisfagundes.common.dispatcher.Dispatcher
 import com.luisfagundes.common.presentation.ViewModel
+import com.luisfagundes.translation.domain.model.Language
 import com.luisfagundes.translation.domain.model.Translation
 import com.luisfagundes.translation.domain.model.TranslationParams
 import com.luisfagundes.translation.domain.usecase.GetSupportedLanguageListUseCase
@@ -24,10 +25,11 @@ internal class TranslationViewModel @Inject constructor(
 ) : ViewModel<TranslationUiState>(
     initialState = TranslationUiState()
 ) {
-    fun translate(text: String, targetLang: String) = viewModelScope.launch {
+    fun translate(text: String, targetLang: Language) = viewModelScope.launch {
+        if (text.count() < 2) return@launch
         val params = TranslationParams(
             text = listOf(text),
-            targetLanguage = targetLang
+            targetLanguage = targetLang.code
         )
         translateTextUseCase.invoke(params)
             .flowOn(dispatcher)
@@ -46,6 +48,7 @@ internal class TranslationViewModel @Inject constructor(
     }
 
     private fun setSuccessState(translationList: List<Translation>) {
-        updateState { state -> state.setResult(translationList.toString()) }
+        val translatedText = translationList.firstOrNull()?.translatedText ?: ""
+        updateState { state -> state.setResult(translatedText) }
     }
 }
