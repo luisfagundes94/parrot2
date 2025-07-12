@@ -11,8 +11,6 @@ import com.luisfagundes.translation.domain.usecase.GetSupportedLanguageListUseCa
 import com.luisfagundes.translation.domain.usecase.TranslateTextUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
@@ -27,36 +25,8 @@ internal class TranslationViewModel @Inject constructor(
 ) : ViewModel<TranslationUiState>(
     initialState = TranslationUiState()
 ) {
-    private var translationJob: Job? = null
-    private var lastTranslatedText: String = ""
-    private val translationCache = mutableMapOf<String, String>()
-    
-    companion object {
-        private const val DEBOUNCE_DELAY_MS = 500L
-        private const val MIN_TEXT_LENGTH = 3
-    }
-
-    fun onTextChanged(text: String, targetLang: Language) {
-        translationJob?.cancel()
-
-        if (text.isBlank() || text.length < MIN_TEXT_LENGTH) return
-        if (text == lastTranslatedText) return
-
-        val cacheKey = "${text}_${targetLang.code}"
-
-        translationCache[cacheKey]?.let { cachedResult ->
-            updateState { state -> state.setResult(cachedResult) }
-            lastTranslatedText = text
-            return
-        }
-
-        translationJob = viewModelScope.launch {
-            delay(DEBOUNCE_DELAY_MS)
-            performTranslation(text, targetLang, cacheKey)
-        }
-    }
-    
-    private suspend fun performTranslation(text: String, targetLang: Language, cacheKey: String) {
+    fun translate(text: String, targetLang: Language) = viewModelScope.launch {
+        if (text.count() < 2) return@launch
         val params = TranslationParams(
             text = listOf(text),
             targetLanguage = targetLang.code
@@ -64,17 +34,8 @@ internal class TranslationViewModel @Inject constructor(
         translateTextUseCase.invoke(params)
             .flowOn(dispatcher)
             .onStart { setLoadingState() }
-            .catch { throwable -> 
-                if (throwable !is kotlinx.coroutines.CancellationException) {
-                    setErrorState(throwable)
-                }
-            }
-            .collect { translationList -> 
-                val result = translationList.firstOrNull()?.translatedText ?: ""
-                translationCache[cacheKey] = result
-                lastTranslatedText = text
-                setSuccessState(translationList)
-            }
+            .catch { throwable -> setErrorState(throwable) }
+            .collect { translationList -> setSuccessState(translationList) }
     }
 
     private fun setLoadingState() {

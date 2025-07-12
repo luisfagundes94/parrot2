@@ -28,7 +28,7 @@ internal fun TranslationRoute(
     TranslationScreen(
         uiState = uiState,
         onInputTextChange = { text ->
-            viewModel.onTextChanged(text, targetLang = uiState.languagePair.second)
+            viewModel.translate(text, targetLang = uiState.languagePair.second)
         },
         modifier = Modifier
             .padding(MaterialTheme.spacing.default)
@@ -45,6 +45,10 @@ internal fun TranslationScreen(
     val textStyle = MaterialTheme.typography.headlineMedium
     var inputText by remember { mutableStateOf("") }
 
+    LaunchedEffect(inputText) {
+        onInputTextChange(inputText)
+    }
+
     Column(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
         modifier = modifier
@@ -59,10 +63,7 @@ internal fun TranslationScreen(
         )
         TranslationInputField(
             value = inputText,
-            onValueChange = { newText -> 
-                inputText = newText
-                onInputTextChange(newText)
-            },
+            onValueChange = { newText -> inputText = newText },
             textStyle = textStyle,
             modifier = Modifier.fillMaxWidth()
         )
