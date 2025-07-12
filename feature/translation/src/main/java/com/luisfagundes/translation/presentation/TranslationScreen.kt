@@ -63,7 +63,9 @@ internal fun TranslationScreen(
             value = inputText,
             onValueChange = { newText -> inputText = newText },
             textStyle = textStyle,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .padding(vertical = MaterialTheme.spacing.default)
+                .fillMaxWidth()
         )
         Button(
             onClick = { onTranslateButtonClick(inputText) }
