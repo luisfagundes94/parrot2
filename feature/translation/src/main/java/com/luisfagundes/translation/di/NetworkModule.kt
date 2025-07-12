@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+internal object NetworkModule {
     
     private const val BASE_URL = "https://api-free.deepl.com/v2/"
     private const val TIMEOUT_SECONDS = 30L

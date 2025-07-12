@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class TranslationRepositoryImpl @Inject constructor(
+internal class TranslationRepositoryImpl @Inject constructor(
     private val dataSource: TranslationDataSource,
     private val translationMapper: TranslationMapper,
     private val languageMapper: LanguageMapper,

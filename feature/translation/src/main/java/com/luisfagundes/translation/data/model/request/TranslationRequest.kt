@@ -2,7 +2,7 @@ package com.luisfagundes.translation.data.model.request
 
 import com.google.gson.annotations.SerializedName
 
-data class TranslationRequest(
+internal data class TranslationRequest(
     @SerializedName("text")
     val text: List<String>,
     @SerializedName("source_lang")

@@ -18,7 +18,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class MapperModule {
+internal abstract class MapperModule {
 
     @Binds
     @Singleton

@@ -2,7 +2,7 @@ package com.luisfagundes.translation.data.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ApiUsageResponse(
+internal data class ApiUsageResponse(
     @SerializedName("character_count")
     val characterCount: Long,
     @SerializedName("character_limit")

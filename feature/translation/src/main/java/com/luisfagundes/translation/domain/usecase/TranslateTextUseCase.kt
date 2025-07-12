@@ -6,7 +6,7 @@ import com.luisfagundes.translation.domain.repository.TranslationRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class TranslateTextUseCase @Inject constructor(
+internal class TranslateTextUseCase @Inject constructor(
     private val repository: TranslationRepository
 ) {
     operator fun invoke(

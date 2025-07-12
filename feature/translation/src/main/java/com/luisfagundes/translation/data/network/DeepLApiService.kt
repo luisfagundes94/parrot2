@@ -9,7 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface DeepLApiService {
+internal interface DeepLApiService {
     
     @POST("translate")
     suspend fun translate(

@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TranslationViewModel @Inject constructor(
+internal class TranslationViewModel @Inject constructor(
     private val getSupportedLanguageListUseCase: GetSupportedLanguageListUseCase,
     private val translateTextUseCase: TranslateTextUseCase,
     @param:Dispatcher(IO) private val dispatcher: CoroutineDispatcher

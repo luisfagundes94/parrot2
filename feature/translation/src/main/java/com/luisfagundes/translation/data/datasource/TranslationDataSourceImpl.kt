@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class TranslationDataSourceImpl @Inject constructor(
+internal class TranslationDataSourceImpl @Inject constructor(
     private val apiService: DeepLApiService
 ) : TranslationDataSource {
     override fun translateText(params: TranslationParams): Flow<TranslationListResponse> = flow {
