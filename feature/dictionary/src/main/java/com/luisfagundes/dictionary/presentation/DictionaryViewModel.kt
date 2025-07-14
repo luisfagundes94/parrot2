@@ -3,6 +3,7 @@ package com.luisfagundes.dictionary.presentation
 import androidx.lifecycle.viewModelScope
 import com.luisfagundes.common.dispatcher.AppDispatcher.IO
 import com.luisfagundes.common.dispatcher.Dispatcher
+import com.luisfagundes.common.extensions.swap
 import com.luisfagundes.common.presentation.ViewModel
 import com.luisfagundes.common.provider.ResourceProvider
 import com.luisfagundes.dictionary.R
@@ -25,30 +26,43 @@ internal class DictionaryViewModel @Inject constructor(
 ) : ViewModel<DictionaryUiState>(
     initialState = DictionaryUiState()
 ) {
-    fun translate(text: String) = viewModelScope.launch {
-        val params = TranslationParams(
-            query = text,
-            sourceLanguage = uiState.value.languagePair.first.code,
-            targetLanguage = uiState.value.languagePair.second.code
-        )
+    fun translate(text: String) {
+        if (text.isBlank()) {
+            setErrorState(resourceProvider.getString(R.string.blank_input_text_error))
+            return
+        }
+        viewModelScope.launch {
+            val params = createTranslationParams(text)
+            executeTranslation(params)
+        }
+    }
+
+    fun swapLanguagePair() {
+        updateState { state -> state.copy(languagePair = state.languagePair.swap()) }
+    }
+
+    private fun createTranslationParams(text: String): TranslationParams {
+        return with(uiState.value.languagePair) {
+            TranslationParams(
+                query = text,
+                sourceLanguage = first.code,
+                targetLanguage = second.code
+            )
+        }
+    }
+
+    private suspend fun executeTranslation(params: TranslationParams) {
         getTranslationsUseCase.invoke(params)
             .flowOn(dispatcher)
             .onStart { setLoadingState() }
             .catch { throwable -> setErrorState(throwable.message.toString()) }
             .collect { words ->
-                if (words.isEmpty()) {
-                    setErrorState(resourceProvider.getString(R.string.translation_not_found))
-                } else {
+                if (words.isEmpty()) setErrorState(
+                    message = resourceProvider.getString(R.string.translation_not_found)
+                ) else {
                     setSuccessState(words)
                 }
             }
-    }
-
-    fun swapLanguagePair() {
-        val sourceLanguage = uiState.value.languagePair.first
-        val targetLanguage = uiState.value.languagePair.second
-        val swappedPair = Pair(targetLanguage, sourceLanguage)
-        updateState { state -> state.copy(languagePair = swappedPair) }
     }
 
     private fun setLoadingState() {
