@@ -9,4 +9,5 @@
     <string name="desc_bookmark_word">save word</string>
     <string name="title_examples_of">Examples of</string>
     <string name="translation_not_found">Translation not found</string>
+    <string name="blank_input_text_error">Enter a word you\'d like to translate</string>
 </resources>
