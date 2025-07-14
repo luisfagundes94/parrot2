@@ -44,6 +44,13 @@ internal class DictionaryViewModel @Inject constructor(
             }
     }
 
+    fun swapLanguagePair() {
+        val sourceLanguage = uiState.value.languagePair.first
+        val targetLanguage = uiState.value.languagePair.second
+        val swappedPair = Pair(targetLanguage, sourceLanguage)
+        updateState { state -> state.copy(languagePair = swappedPair) }
+    }
+
     private fun setLoadingState() {
         updateState { state -> state.setLoading(true) }
     }
