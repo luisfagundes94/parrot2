@@ -31,7 +31,7 @@ internal class DictionaryViewModel @Inject constructor(
         getTranslationsUseCase.invoke(params)
             .flowOn(dispatcher)
             .onStart { setLoadingState() }
-            .catch { throwable -> setErrorState(throwable.cause.toString()) }
+            .catch { throwable -> setErrorState(throwable.toString()) }
             .collect { words -> setSuccessState(words) }
     }
 

@@ -14,6 +14,14 @@ internal data class DictionaryUiState(
     val isLoading: Boolean = false,
     val errorMessage: String = "",
 ) : UiState {
+
+    val hasExamples: Boolean
+        get() = words.all { word ->
+            word.translations.all { translation ->
+                translation.examples.isNotEmpty()
+            }
+        }
+
     fun setResult(words: List<Word>) = this.copy(
         words = words,
         isLoading = false,

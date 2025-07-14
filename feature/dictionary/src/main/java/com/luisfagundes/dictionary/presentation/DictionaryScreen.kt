@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,16 +14,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.luisfagundes.designsystem.component.ParrotTextField
 import com.luisfagundes.designsystem.theme.spacing
 import com.luisfagundes.dictionary.R
+import com.luisfagundes.dictionary.presentation.components.ExamplesResult
 import com.luisfagundes.dictionary.presentation.components.LanguageSelector
-import com.luisfagundes.designsystem.component.ParrotTextField
-import com.luisfagundes.dictionary.presentation.components.DictionaryResult
+import com.luisfagundes.dictionary.presentation.components.TranslationsResult
 
 @Composable
 internal fun DictionaryRoute(
@@ -50,6 +53,7 @@ internal fun DictionaryScreen(
 
     Column(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
         LanguageSelector(
@@ -75,11 +79,27 @@ internal fun DictionaryScreen(
                 .fillMaxWidth()
         ) {
             Text(
-                text = stringResource(R.string.translate)
+                text = stringResource(R.string.translate),
+                style = MaterialTheme.typography.titleMedium
             )
         }
-        DictionaryResult(
-            uiState.words
-        )
+        if (uiState.isLoading) {
+            CircularProgressIndicator()
+        }
+        if (uiState.errorMessage.isNotEmpty()) {
+            Text(
+                text = uiState.errorMessage,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+        if (uiState.words.isNotEmpty()) {
+            TranslationsResult(
+                words = uiState.words
+            )
+            ExamplesResult(
+                words = uiState.words,
+                hasExamples = uiState.hasExamples
+            )
+        }
     }
 }

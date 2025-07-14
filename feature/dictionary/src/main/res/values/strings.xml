@@ -7,5 +7,5 @@
     <string name="min_text_error">Text must be greater than one character</string>
     <string name="other_translations">Other translations</string>
     <string name="desc_bookmark_word">save word</string>
-    <string name="title_examples_of">Examples of </string>
+    <string name="title_examples_of">Examples of</string>
 </resources>

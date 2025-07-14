@@ -22,8 +22,9 @@ import com.luisfagundes.dictionary.domain.model.Word
 @Composable
 internal fun ExamplesResult(
     words: List<Word>,
+    hasExamples: Boolean
 ) {
-    if (words.first().translations.first().examples.isEmpty()) return
+    if (hasExamples.not()) return
 
     ContainerBox {
         Text(
@@ -75,7 +76,7 @@ private fun getExamplesOf(word: Word): AnnotatedString {
     val annotatedString = buildAnnotatedString {
         append(stringResource(R.string.title_examples_of))
         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-            append(word.text)
+            append(" " + word.text)
         }
     }
     return annotatedString
