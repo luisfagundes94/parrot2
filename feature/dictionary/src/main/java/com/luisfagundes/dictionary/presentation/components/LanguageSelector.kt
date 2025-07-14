@@ -21,9 +21,9 @@ import com.luisfagundes.dictionary.R
 internal fun LanguageSelector(
     sourceLang: String,
     targetLang: String,
-    onSourceLangClick: () -> Unit,
-    onTargetLangClick: () -> Unit,
-    onLangSwitchClick: () -> Unit,
+    onSourceLanguageButtonClick: () -> Unit,
+    onTargetLanguageButtonClick: () -> Unit,
+    onLanguageSwapButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -31,7 +31,7 @@ internal fun LanguageSelector(
         modifier = modifier
     ) {
         OutlinedButton(
-            onClick = onSourceLangClick,
+            onClick = onSourceLanguageButtonClick,
             modifier = Modifier.weight(1f)
         ) {
             Text(
@@ -39,7 +39,7 @@ internal fun LanguageSelector(
             )
         }
         IconButton(
-            onClick = onLangSwitchClick
+            onClick = onLanguageSwapButtonClick
         ) {
             Icon(
                 imageVector = Icons.Default.SwapHoriz,
@@ -47,7 +47,7 @@ internal fun LanguageSelector(
             )
         }
         OutlinedButton(
-            onClick = onTargetLangClick,
+            onClick = onTargetLanguageButtonClick,
             modifier = Modifier.weight(1f)
         ) {
             Text(
@@ -67,9 +67,9 @@ internal fun LanguageSelectorPreview() {
             LanguageSelector(
                 sourceLang = "English",
                 targetLang = "Portuguese",
-                onSourceLangClick = {},
-                onTargetLangClick = {},
-                onLangSwitchClick = {},
+                onSourceLanguageButtonClick = {},
+                onTargetLanguageButtonClick = {},
+                onLanguageSwapButtonClick = {},
                 modifier = Modifier.fillMaxWidth()
             )
         }
