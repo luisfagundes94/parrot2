@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import com.luisfagundes.designsystem.theme.spacing
 import com.luisfagundes.dictionary.R
 import com.luisfagundes.dictionary.domain.model.Word
@@ -52,12 +53,13 @@ internal fun TranslationsResult(
         Text(
             text = stringResource(R.string.other_translations),
             style = MaterialTheme.typography.titleMedium,
+            fontWeight = Bold
         )
         Spacer(Modifier.height(MaterialTheme.spacing.small))
         words.forEach { word ->
             Text(
                 text = word.translations.first().partOfSpeech.capitalize(),
-                fontWeight = FontWeight.Bold,
+                fontWeight = Bold,
                 color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(MaterialTheme.spacing.verySmall))
@@ -68,8 +70,7 @@ internal fun TranslationsResult(
             ) {
                 word.translations.joinToString(", ") { it.text }.let { text ->
                     Text(
-                        text = text,
-                        style = MaterialTheme.typography.bodyMedium,
+                        text = text
                     )
                 }
             }
