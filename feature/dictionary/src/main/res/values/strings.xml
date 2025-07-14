@@ -8,4 +8,5 @@
     <string name="other_translations">Other translations</string>
     <string name="desc_bookmark_word">save word</string>
     <string name="title_examples_of">Examples of</string>
+    <string name="translation_not_found">Translation not found</string>
 </resources>
