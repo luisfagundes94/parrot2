@@ -1,6 +1,5 @@
 package com.luisfagundes.dictionary.di
 
-import com.luisfagundes.dictionary.BuildConfig
 import com.luisfagundes.dictionary.data.remote.LingueeApiService
 import dagger.Module
 import dagger.Provides
@@ -10,11 +9,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-private val BASE_URL = if (BuildConfig.DEBUG) {
-    "http://10.0.2.2:3000/"
-} else {
-    "https://linguee-api.fly.dev/"
-}
+private const val BASE_URL_EMULATOR_PROXY = "http://10.0.2.2:3000/"
+private const val BASE_URL = "https://linguee-api.fly.dev/"
 
 @Module
 @InstallIn(SingletonComponent::class)
