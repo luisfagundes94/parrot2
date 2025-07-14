@@ -36,6 +36,7 @@ internal fun DictionaryRoute(
     DictionaryScreen(
         uiState = uiState,
         onTranslateButtonClick = viewModel::translate,
+        onLanguageSwapButtonClick = viewModel::swapLanguagePair,
         modifier = Modifier
             .padding(MaterialTheme.spacing.default)
             .fillMaxWidth()
@@ -47,6 +48,7 @@ internal fun DictionaryScreen(
     uiState: DictionaryUiState,
     modifier: Modifier = Modifier,
     onTranslateButtonClick: (String) -> Unit,
+    onLanguageSwapButtonClick: () -> Unit,
 ) {
     val textStyle = MaterialTheme.typography.headlineMedium
     var inputText by remember { mutableStateOf("") }
@@ -59,9 +61,9 @@ internal fun DictionaryScreen(
         LanguageSelector(
             sourceLang = uiState.languagePair.first.name,
             targetLang = uiState.languagePair.second.name,
-            onSourceLangClick = {},
-            onTargetLangClick = {},
-            onLangSwitchClick = {},
+            onSourceLanguageButtonClick = {},
+            onTargetLanguageButtonClick = {},
+            onLanguageSwapButtonClick = onLanguageSwapButtonClick,
             modifier = Modifier.fillMaxWidth()
         )
         ParrotTextField(
