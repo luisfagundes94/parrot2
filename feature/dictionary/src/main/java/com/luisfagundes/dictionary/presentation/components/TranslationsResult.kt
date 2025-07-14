@@ -16,11 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import com.luisfagundes.designsystem.theme.spacing
 import com.luisfagundes.dictionary.R
 import com.luisfagundes.dictionary.domain.model.Word
+import java.util.Locale
 
 @Composable
 internal fun TranslationsResult(
@@ -34,7 +34,7 @@ internal fun TranslationsResult(
             Text(
                 text = words.first().translations.first().text,
                 style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
+                fontWeight = Bold,
             )
             Spacer(modifier = Modifier.weight(1f))
             IconButton(
