@@ -49,7 +49,7 @@ dependencies {
     // Modules
     implementation(projects.core.designsystem)
     implementation(projects.core.common)
-    implementation(projects.feature.translation)
+    implementation(projects.feature.dictionary)
 
     // Hilt
     implementation(libs.hilt.android)

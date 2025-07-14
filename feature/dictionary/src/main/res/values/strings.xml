@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_translation_title">Translation</string>
+    <string name="swap_languages">Swap languages</string>
+    <string name="enter_text">Enter text</string>
+    <string name="translate">Translate</string>
+    <string name="min_text_error">Text must be greater than one character</string>
+    <string name="other_translations">Other translations</string>
+    <string name="desc_bookmark_word">save word</string>
+    <string name="title_examples_of">Examples of </string>
+</resources>

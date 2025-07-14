@@ -25,4 +25,4 @@ rootProject.name = "parrot"
 include(":app")
 include(":core:designsystem")
 include(":core:common")
-include(":feature:translation")
+include(":feature:dictionary")

@@ -13,7 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.luisfagundes.parrot.navigation.TopLevelDestination
-import com.luisfagundes.translation.presentation.navigateToTranslation
+import com.luisfagundes.dictionary.presentation.navigateToDictionary
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -73,7 +73,7 @@ class ParrotAppState(
         }
 
         when (topLevelDestination) {
-            TopLevelDestination.HOME -> navController.navigateToTranslation(topLevelNavOptions)
+            TopLevelDestination.HOME -> navController.navigateToDictionary(topLevelNavOptions)
         }
     }
 }

@@ -3,12 +3,14 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.luisfagundes.common"
+    namespace = "com.luisfagundes.dictionary"
     compileSdk = 36
 
     defaultConfig {
@@ -36,16 +38,35 @@ android {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
 }
 
 dependencies {
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    // Modules
+    implementation(projects.core.common)
+    implementation(projects.core.designsystem)
 
     // Network
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // UI
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    debugImplementation(libs.androidx.ui.tooling)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

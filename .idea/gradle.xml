@@ -15,7 +15,7 @@
             <option value="$PROJECT_DIR$/core/common" />
             <option value="$PROJECT_DIR$/core/designsystem" />
             <option value="$PROJECT_DIR$/feature" />
-            <option value="$PROJECT_DIR$/feature/translation" />
+            <option value="$PROJECT_DIR$/feature/dictionary" />
           </set>
         </option>
       </GradleProjectSettings>
