@@ -16,8 +16,8 @@ internal data class DictionaryUiState(
 ) : UiState {
 
     val hasExamples: Boolean
-        get() = words.all { word ->
-            word.translations.all { translation ->
+        get() = words.any { word ->
+            word.translations.any { translation ->
                 translation.examples.isNotEmpty()
             }
         }
