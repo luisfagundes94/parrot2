@@ -37,6 +37,8 @@ internal class DictionaryViewModelTest {
     private val resourceProvider = mockk<ResourceProvider>()
     private val testDispatcher = UnconfinedTestDispatcher()
 
+    private val initialState = DictionaryUiState()
+
     private lateinit var viewModel: DictionaryViewModel
 
     @Before
@@ -51,15 +53,7 @@ internal class DictionaryViewModelTest {
     @Test
     fun `initial state should have default values`() = runTest {
         viewModel.uiState.test {
-            val initialState = awaitItem()
-
-            assertEquals(English, initialState.languagePair.first)
-            assertEquals(Portuguese, initialState.languagePair.second)
-            assertEquals("", initialState.inputText)
-            assertTrue(initialState.words.isEmpty())
-            assertFalse(initialState.isLoading)
-            assertEquals("", initialState.errorMessage)
-            assertFalse(initialState.hasExamples)
+            assertEquals(initialState, awaitItem())
         }
     }
 
@@ -74,9 +68,7 @@ internal class DictionaryViewModelTest {
             viewModel.translate("   ")
 
             val errorState = awaitItem()
-            assertFalse(errorState.isLoading)
-            assertEquals(errorMessage, errorState.errorMessage)
-            assertTrue(errorState.words.isEmpty())
+            assertEquals(initialState.setError(errorMessage), errorState)
         }
 
         verify { resourceProvider.getString(R.string.blank_input_text_error) }
@@ -85,6 +77,7 @@ internal class DictionaryViewModelTest {
     @Test
     fun `translate with valid text should show loading then success state`() = runTest {
         val inputText = "hello"
+
         coEvery {
             getTranslationsUseCase.invoke(any())
         } returns flowOf(mockWords)
@@ -95,14 +88,10 @@ internal class DictionaryViewModelTest {
             viewModel.translate(inputText)
 
             val loadingState = awaitItem()
-            assertTrue(loadingState.isLoading)
-            assertEquals("", loadingState.errorMessage)
-            assertTrue(loadingState.words.isEmpty())
+            assertEquals(initialState.setLoading(true), loadingState)
 
             val successState = awaitItem()
-            assertFalse(successState.isLoading)
-            assertEquals("", successState.errorMessage)
-            assertEquals(mockWords, successState.words)
+            assertEquals(initialState.setResult(mockWords), successState)
         }
     }
 
@@ -125,9 +114,7 @@ internal class DictionaryViewModelTest {
             awaitItem() // Loading state
 
             val errorState = awaitItem()
-            assertFalse(errorState.isLoading)
-            assertEquals(errorMessage, errorState.errorMessage)
-            assertTrue(errorState.words.isEmpty())
+            assertEquals(initialState.setError(errorMessage), errorState)
         }
 
         verify { resourceProvider.getString(R.string.translation_not_found) }
@@ -150,9 +137,7 @@ internal class DictionaryViewModelTest {
             awaitItem() // Loading state
 
             val errorState = awaitItem()
-            assertFalse(errorState.isLoading)
-            assertEquals(errorMessage, errorState.errorMessage)
-            assertTrue(errorState.words.isEmpty())
+            assertEquals(initialState.setError(errorMessage), errorState)
         }
     }
 
