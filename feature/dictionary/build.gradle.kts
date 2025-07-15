@@ -48,6 +48,7 @@ dependencies {
     // Modules
     implementation(projects.core.common)
     implementation(projects.core.designsystem)
+    implementation(projects.core.testing)
 
     // Network
     implementation(libs.retrofit)
@@ -71,7 +72,4 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }
