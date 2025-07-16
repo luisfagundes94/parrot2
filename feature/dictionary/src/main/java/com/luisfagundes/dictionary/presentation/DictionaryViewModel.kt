@@ -33,7 +33,11 @@ internal class DictionaryViewModel @Inject constructor(
         }
         viewModelScope.launch {
             val params = createTranslationParams(text)
-            executeTranslation(params)
+            getTranslationsUseCase.invoke(params)
+                .flowOn(dispatcher)
+                .onStart { setLoadingState() }
+                .catch { throwable -> setErrorState(throwable.message.toString()) }
+                .collect { words -> handleTranslationResult(words) }
         }
     }
 
@@ -42,27 +46,20 @@ internal class DictionaryViewModel @Inject constructor(
     }
 
     private fun createTranslationParams(text: String): TranslationParams {
-        return with(uiState.value.languagePair) {
-            TranslationParams(
-                query = text,
-                sourceLanguage = first.code,
-                targetLanguage = second.code
-            )
-        }
+        val (sourceLanguage, targetLanguage) = uiState.value.languagePair
+        return TranslationParams(
+            query = text,
+            sourceLanguage = sourceLanguage.code,
+            targetLanguage = targetLanguage.code
+        )
     }
 
-    private suspend fun executeTranslation(params: TranslationParams) {
-        getTranslationsUseCase.invoke(params)
-            .flowOn(dispatcher)
-            .onStart { setLoadingState() }
-            .catch { throwable -> setErrorState(throwable.message.toString()) }
-            .collect { words ->
-                if (words.isEmpty()) setErrorState(
-                    message = resourceProvider.getString(R.string.translation_not_found)
-                ) else {
-                    setSuccessState(words)
-                }
-            }
+    private fun handleTranslationResult(words: List<Word>) {
+        if (words.isEmpty()) {
+            setErrorState(resourceProvider.getString(R.string.translation_not_found))
+        } else {
+            setSuccessState(words)
+        }
     }
 
     private fun setLoadingState() {
