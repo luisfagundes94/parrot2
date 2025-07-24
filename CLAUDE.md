@@ -42,11 +42,11 @@ The project uses Gradle with Kotlin DSL (`.gradle.kts` files) and follows Androi
 ./gradlew :app:build
 ./gradlew :core:common:build
 ./gradlew :core:designsystem:build
-./gradlew :feature:translation:build
+./gradlew :feature:translation.png:build
 
 # Run tests for specific modules
 ./gradlew :core:common:test
-./gradlew :feature:translation:test
+./gradlew :feature:translation.png:test
 ```
 
 ## Architecture

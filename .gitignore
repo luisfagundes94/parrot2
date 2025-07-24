@@ -15,3 +15,6 @@
 local.properties
 apikey.properties
 /.idea/studiobot.xml
+CLAUDE.md
+.claude
+/.claude
