@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.outlined.Translate
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.luisfagundes.dictionary.presentation.translation.TranslationRoute
 import kotlin.reflect.KClass
 
 enum class TopLevelDestination(
@@ -17,8 +18,8 @@ enum class TopLevelDestination(
     HOME(
         selectedIcon = Icons.Filled.Translate,
         unselectedIcon = Icons.Outlined.Translate,
-        iconTextId = com.luisfagundes.translation.R.string.feature_translation_title,
-        titleTextId = com.luisfagundes.translation.R.string.feature_translation_title,
-        route = com.luisfagundes.translation.presentation.TranslationRoute::class,
+        iconTextId = com.luisfagundes.dictionary.R.string.feature_translation_title,
+        titleTextId = com.luisfagundes.dictionary.R.string.feature_translation_title,
+        route = TranslationRoute::class,
     ),
 }
