@@ -1,12 +1,13 @@
 # 🦜 Parrot
 
-**Parrot** is a modern Android translation application built with Jetpack Compose and a clean modular architecture. The app provides seamless language translation capabilities with an adaptive, responsive UI that works beautifully across different screen sizes.
+**Parrot** is a modern Android dictionary and translation application built with Jetpack Compose and a clean modular architecture. The app provides seamless language translation capabilities with an adaptive, responsive UI that works beautifully across different screen sizes.
 
 ## 📱 Features
 
-- **Real-time Translation**: Translate text between supported languages
-- **Language Pair Swapping**: Easily swap source and target languages  
-- **Adaptive UI**: Responsive design that adapts to different screen sizes
+- **Real-time Translation**: Translate text between supported languages using Linguee API
+- **Language Pair Swapping**: Easily swap source and target languages with one tap
+- **Dictionary Functionality**: View detailed word information including examples and usage
+- **Adaptive UI**: Responsive design that adapts to different screen sizes and orientations
 - **Material 3 Design**: Modern UI following Material Design 3 principles
 - **Clean Architecture**: Well-structured, maintainable codebase with clear separation of concerns
 
@@ -29,7 +30,7 @@ parrot/
 │   ├── designsystem/      # UI components, theme, design tokens
 │   └── testing/           # Testing utilities and rules
 └── feature/
-    └── translation/        # Translation feature implementation
+    └── dictionary/         # Dictionary and translation feature implementation
 ```
 
 ### Architecture Patterns
@@ -73,7 +74,7 @@ Custom base class providing:
 - **Coroutines** - Asynchronous programming
 
 ### Networking & Data
-- **Retrofit** 3.0.0 - HTTP client
+- **Retrofit** 3.0.0 - HTTP client for Linguee API integration
 - **Gson** - JSON serialization/deserialization
 
 ### Testing
@@ -95,6 +96,7 @@ The project includes comprehensive testing at multiple levels:
 ### Unit Tests
 - **ViewModel Tests**: Complete test coverage for `TranslationViewModel` using MockK and Turbine
 - **Testing Utilities**: Custom test rules and mocks in `core/testing/`
+- **Domain Layer Tests**: Use case and repository tests with comprehensive mocking
 
 ## 📁 Project Structure
 
@@ -122,10 +124,12 @@ The project includes comprehensive testing at multiple levels:
 
 ### Feature Modules
 
-#### Translation (`feature/translation/`)
-- **Data Layer**: API services, repositories, mappers
-- **Domain Layer**: Use cases, models, business logic
-- **Presentation Layer**: ViewModels, UI states, Compose screens
+#### Dictionary (`feature/dictionary/`)
+- **Data Layer**: API services, repositories, mappers for translation data
+- **Domain Layer**: Use cases, models, and business logic for translations
+- **Presentation Layer**: Organized by feature area
+  - `translation/`: Translation screen, ViewModel, and UI components
+  - `navigation/`: Type-safe navigation setup for dictionary features
 
 ## 🎨 UI/UX
 
