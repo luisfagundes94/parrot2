@@ -13,6 +13,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import com.luisfagundes.common.extensions.capitalize
 import com.luisfagundes.designsystem.theme.spacing
 import com.luisfagundes.translation.R
 import com.luisfagundes.translation.domain.model.Example
