@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "WebFetch(domain:linguee-api.fly.dev)"
-    ],
-    "deny": []
-  }
-}
