@@ -5,7 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.outlined.Translate
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.luisfagundes.dictionary.presentation.translation.TranslationRoute
+import com.luisfagundes.dictionary.presentation.translation.navigation.TranslationRoute
 import kotlin.reflect.KClass
 
 enum class TopLevelDestination(
