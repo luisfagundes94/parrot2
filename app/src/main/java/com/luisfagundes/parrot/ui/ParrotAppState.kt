@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.luisfagundes.parrot.navigation.TopLevelDestination
 import com.luisfagundes.dictionary.presentation.translation.navigation.navigateToTranslation
+import com.luisfagundes.dictionary.presentation.history.navigation.navigateToHistory
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -74,6 +75,7 @@ class ParrotAppState(
 
         when (topLevelDestination) {
             TopLevelDestination.HOME -> navController.navigateToTranslation(topLevelNavOptions)
+            TopLevelDestination.HISTORY -> navController.navigateToHistory(topLevelNavOptions)
         }
     }
 }

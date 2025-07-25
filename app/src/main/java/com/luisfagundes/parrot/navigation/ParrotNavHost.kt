@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import com.luisfagundes.parrot.ui.ParrotAppState
 import com.luisfagundes.dictionary.presentation.translation.navigation.TranslationRoute
 import com.luisfagundes.dictionary.presentation.translation.navigation.translationScreen
+import com.luisfagundes.dictionary.presentation.history.navigation.historyScreen
 
 @Composable
 fun ParrotNavHost(
@@ -20,5 +21,6 @@ fun ParrotNavHost(
         modifier = modifier,
     ) {
         translationScreen()
+        historyScreen()
     }
 }
