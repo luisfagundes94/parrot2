@@ -1,25 +1,23 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.luisfagundes.parrot"
+    namespace = "com.luisfagundes.translation"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.luisfagundes.parrot"
         minSdk = 24
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -42,22 +40,19 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            excludes += "/META-INF/LICENSE.md"
-            excludes += "/META-INF/LICENSE-notice.md"
-        }
+        buildConfig = true
     }
 }
 
 dependencies {
     // Modules
-    implementation(projects.core.designsystem)
     implementation(projects.core.common)
-    implementation(projects.feature.translation)
+    implementation(projects.core.designsystem)
+    implementation(projects.core.testing)
+
+    // Network
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -65,16 +60,16 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 
-    // Adaptive Window Info
-    implementation(libs.androidx.compose.material3.adaptive)
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
+    // UI
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    debugImplementation(libs.androidx.ui.tooling)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
 }

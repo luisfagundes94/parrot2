@@ -17,8 +17,8 @@ enum class TopLevelDestination(
     HOME(
         selectedIcon = Icons.Filled.Translate,
         unselectedIcon = Icons.Outlined.Translate,
-        iconTextId = com.luisfagundes.dictionary.R.string.feature_translation_title,
-        titleTextId = com.luisfagundes.dictionary.R.string.feature_translation_title,
-        route = com.luisfagundes.dictionary.presentation.DictionaryRoute::class,
+        iconTextId = com.luisfagundes.translation.R.string.feature_translation_title,
+        titleTextId = com.luisfagundes.translation.R.string.feature_translation_title,
+        route = com.luisfagundes.translation.presentation.TranslationRoute::class,
     ),
 }

@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.luisfagundes.parrot.ui.ParrotAppState
-import com.luisfagundes.dictionary.presentation.DictionaryRoute
-import com.luisfagundes.dictionary.presentation.dictionaryScreen
+import com.luisfagundes.translation.presentation.TranslationRoute
+import com.luisfagundes.translation.presentation.translationScreen
 
 @Composable
 fun ParrotNavHost(
@@ -16,9 +16,9 @@ fun ParrotNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = DictionaryRoute,
+        startDestination = TranslationRoute,
         modifier = modifier,
     ) {
-        dictionaryScreen()
+        translationScreen()
     }
 }

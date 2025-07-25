@@ -24,7 +24,7 @@ parrot/
 │   ├── designsystem/      # UI components, theme, design tokens
 │   └── testing/           # Testing utilities and rules
 └── feature/
-    └── dictionary/        # Translation feature implementation
+    └── translation/        # Translation feature implementation
 ```
 
 ### Architecture Patterns
@@ -88,7 +88,7 @@ Custom base class providing:
 The project includes comprehensive testing at multiple levels:
 
 ### Unit Tests
-- **ViewModel Tests**: Complete test coverage for `DictionaryViewModel` using MockK and Turbine
+- **ViewModel Tests**: Complete test coverage for `TranslationViewModel` using MockK and Turbine
 - **Testing Utilities**: Custom test rules and mocks in `core/testing/`
 
 ## 📁 Project Structure
@@ -117,7 +117,7 @@ The project includes comprehensive testing at multiple levels:
 
 ### Feature Modules
 
-#### Dictionary (`feature/dictionary/`)
+#### Translation (`feature/translation/`)
 - **Data Layer**: API services, repositories, mappers
 - **Domain Layer**: Use cases, models, business logic
 - **Presentation Layer**: ViewModels, UI states, Compose screens
