@@ -10,6 +10,11 @@
 - **Material 3 Design**: Modern UI following Material Design 3 principles
 - **Clean Architecture**: Well-structured, maintainable codebase with clear separation of concerns
 
+## 📸 Screenshots
+<p float="left">
+  <img src="https://github.com/luisfagundes94/parrot2/blob/master/screenshot/translation.png?raw=true" width="200" /> 
+</p>
+
 ## 🏗️ Architecture
 
 ### Modular Architecture
@@ -154,7 +159,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Jetpack Compose Documentation](https://developer.android.com/jetpack/compose)
 - [Material Design 3](https://m3.material.io/)
 - [Hilt Documentation](https://dagger.dev/hilt/)
-
----
-
-**Built with ❤️ using modern Android development practices**
