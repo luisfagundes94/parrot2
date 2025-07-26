@@ -15,6 +15,6 @@ internal class WordMapper @Inject constructor(
         forms = source.forms,
         grammarInfo = source.grammarInfo.orEmpty(),
         audioLinks = source.audioLinks.map { audioLinkMapper.mapToDomain(it) },
-        translations = source.translations.map { translationMapper.map(it) }
+        translations = source.translations.map { translationMapper.mapToDomain(it) }
     )
 }
