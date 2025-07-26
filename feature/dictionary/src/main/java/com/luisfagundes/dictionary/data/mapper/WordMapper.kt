@@ -1,6 +1,5 @@
 package com.luisfagundes.dictionary.data.mapper
 
-import com.luisfagundes.common.mapper.Mapper
 import com.luisfagundes.dictionary.data.model.response.WordResponse
 import com.luisfagundes.dictionary.domain.model.Word
 import javax.inject.Inject
@@ -8,14 +7,14 @@ import javax.inject.Inject
 internal class WordMapper @Inject constructor(
     private val audioLinkMapper: AudioLinkMapper,
     private val translationMapper: TranslationMapper
-) : Mapper<WordResponse, Word> {
-    override fun map(source: WordResponse) = Word(
+) {
+    fun mapToDomain(source: WordResponse) = Word(
         featured = source.featured,
         text = source.text,
         partOfSpeech = source.pos,
         forms = source.forms,
         grammarInfo = source.grammarInfo.orEmpty(),
-        audioLinks = source.audioLinks.map { audioLinkMapper.map(it) },
+        audioLinks = source.audioLinks.map { audioLinkMapper.mapToDomain(it) },
         translations = source.translations.map { translationMapper.map(it) }
     )
 }

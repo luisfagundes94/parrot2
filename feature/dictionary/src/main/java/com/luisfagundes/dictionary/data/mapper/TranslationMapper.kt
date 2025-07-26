@@ -12,7 +12,7 @@ internal class TranslationMapper @Inject constructor(
         featured = source.featured,
         text = source.text,
         partOfSpeech = source.pos,
-        examples = source.examples?.map { exampleMapper.map(it) } ?: emptyList(),
+        examples = source.examples?.map { exampleMapper.mapToDomain(it) } ?: emptyList(),
         usageFrequency = source.usageFrequency.orEmpty()
     )
 }

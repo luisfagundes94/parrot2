@@ -29,7 +29,7 @@ internal class TranslationRepositoryImpl @Inject constructor(
         )
         return dataSource.getTranslations(request).map { wordResponseList ->
             wordResponseList.map { response ->
-                wordMapper.map(response)
+                wordMapper.mapToDomain(response)
             }
         }
     }
