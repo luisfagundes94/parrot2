@@ -34,8 +34,6 @@ internal class TranslationViewModel @Inject constructor(
             return
         }
 
-        updateState { state -> state.copy(inputText = text) }
-        
         viewModelScope.launch {
             val params = createTranslationParams(text)
             getTranslationsUseCase.invoke(params)
@@ -44,6 +42,10 @@ internal class TranslationViewModel @Inject constructor(
                 .catch { throwable -> setErrorState(throwable.message.toString()) }
                 .collect { words -> setTranslationResult(words) }
         }
+    }
+
+    fun updateInputText(text: String) {
+        updateState { state -> state.copy(inputText = text) }
     }
 
     fun swapLanguagePair() {

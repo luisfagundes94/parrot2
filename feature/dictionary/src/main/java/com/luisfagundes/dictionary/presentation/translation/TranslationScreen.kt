@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,6 +43,7 @@ internal fun TranslationRoute(
         onTranslateButtonClick = viewModel::translate,
         onLanguageSwapButtonClick = viewModel::swapLanguagePair,
         onSaveWordClick = viewModel::saveTranslationToHistory,
+        onInputTextChange = viewModel::updateInputText,
         modifier = Modifier
             .verticalScroll(scrollState)
             .padding(MaterialTheme.spacing.default)
@@ -55,10 +57,10 @@ internal fun TranslationScreen(
     modifier: Modifier = Modifier,
     onTranslateButtonClick: (String) -> Unit,
     onLanguageSwapButtonClick: () -> Unit,
-    onSaveWordClick: (Word, Boolean) -> Unit
+    onSaveWordClick: (Word, Boolean) -> Unit,
+    onInputTextChange: (String) -> Unit,
 ) {
     val textStyle = MaterialTheme.typography.headlineMedium
-    var inputText by remember { mutableStateOf("") }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
@@ -74,15 +76,15 @@ internal fun TranslationScreen(
             modifier = Modifier.fillMaxWidth()
         )
         ParrotTextField(
-            value = inputText,
-            onValueChange = { newText -> inputText = newText },
+            value = uiState.inputText,
+            onValueChange = { newText -> onInputTextChange(newText) },
             textStyle = textStyle,
             modifier = Modifier
                 .padding(vertical = MaterialTheme.spacing.default)
                 .fillMaxWidth()
         )
         Button(
-            onClick = { onTranslateButtonClick(inputText) },
+            onClick = { onTranslateButtonClick(uiState.inputText) },
             modifier = Modifier
                 .height(48.dp)
                 .fillMaxWidth()
