@@ -8,7 +8,7 @@ import com.luisfagundes.dictionary.domain.model.Word
 internal val mockWords = listOf(
     Word(
         featured = true,
-        text = "hello",
+        translatedText = "hello",
         partOfSpeech = "noun",
         forms = listOf("hello", "hellos"),
         grammarInfo = "countable",
@@ -28,7 +28,7 @@ internal val mockWords = listOf(
 internal val mockWordsWithExamples = listOf(
     Word(
         featured = true,
-        text = "hello",
+        translatedText = "hello",
         partOfSpeech = "noun",
         forms = listOf("hello"),
         grammarInfo = "",

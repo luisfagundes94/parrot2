@@ -10,7 +10,7 @@ internal class WordMapper @Inject constructor(
 ) {
     fun mapToDomain(source: WordResponse) = Word(
         featured = source.featured,
-        text = source.text,
+        translatedText = source.text,
         partOfSpeech = source.pos,
         forms = source.forms,
         grammarInfo = source.grammarInfo.orEmpty(),
