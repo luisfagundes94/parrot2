@@ -1,13 +1,13 @@
 package com.luisfagundes.dictionary.domain.usecase
 
-import com.luisfagundes.dictionary.domain.model.SaveTranslationParams
+import com.luisfagundes.dictionary.domain.model.SaveWordParams
 import com.luisfagundes.dictionary.domain.model.SupportedLanguage
 import com.luisfagundes.dictionary.domain.model.Word
-import com.luisfagundes.dictionary.domain.repository.TranslationRepository
+import com.luisfagundes.dictionary.domain.repository.WordRepository
 import javax.inject.Inject
 
-internal class SaveTranslationToHistoryUseCase @Inject constructor(
-    private val repository: TranslationRepository
+internal class SaveWordUseCase @Inject constructor(
+    private val repository: WordRepository
 ) {
     suspend operator fun invoke(
         query: String,
@@ -16,7 +16,7 @@ internal class SaveTranslationToHistoryUseCase @Inject constructor(
     ) {
         val primaryTranslation = word.translations.firstOrNull()
         if (primaryTranslation != null) {
-            val params = SaveTranslationParams(
+            val params = SaveWordParams(
                 query = query,
                 sourceLanguage = languagePair.first,
                 targetLanguage = languagePair.second,
@@ -24,7 +24,7 @@ internal class SaveTranslationToHistoryUseCase @Inject constructor(
                 partOfSpeech = word.partOfSpeech,
                 timestamp = System.currentTimeMillis()
             )
-            repository.saveTranslationToHistory(params)
+            repository.saveWordToHistory(params)
         }
     }
 }

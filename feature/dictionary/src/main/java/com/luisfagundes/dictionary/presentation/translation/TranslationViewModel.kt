@@ -9,8 +9,8 @@ import com.luisfagundes.common.provider.ResourceProvider
 import com.luisfagundes.dictionary.R
 import com.luisfagundes.dictionary.domain.model.TranslationParams
 import com.luisfagundes.dictionary.domain.model.Word
-import com.luisfagundes.dictionary.domain.usecase.GetTranslationsUseCase
-import com.luisfagundes.dictionary.domain.usecase.SaveTranslationToHistoryUseCase
+import com.luisfagundes.dictionary.domain.usecase.TranslateWordUseCase
+import com.luisfagundes.dictionary.domain.usecase.SaveWordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
@@ -21,8 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class TranslationViewModel @Inject constructor(
-    private val getTranslationsUseCase: GetTranslationsUseCase,
-    private val saveTranslationToHistoryUseCase: SaveTranslationToHistoryUseCase,
+    private val translateWordUseCase: TranslateWordUseCase,
+    private val saveWordUseCase: SaveWordUseCase,
     private val resourceProvider: ResourceProvider,
     @param:Dispatcher(IO) private val dispatcher: CoroutineDispatcher
 ) : ViewModel<TranslationUiState>(
@@ -36,7 +36,7 @@ internal class TranslationViewModel @Inject constructor(
 
         viewModelScope.launch {
             val params = createTranslationParams(text)
-            getTranslationsUseCase.invoke(params)
+            translateWordUseCase.invoke(params)
                 .flowOn(dispatcher)
                 .onStart { setLoadingState() }
                 .catch { throwable -> setErrorState(throwable.message.toString()) }
@@ -60,7 +60,7 @@ internal class TranslationViewModel @Inject constructor(
             val (sourceLanguage, targetLanguage) = currentState.languagePair
 
             try {
-                saveTranslationToHistoryUseCase(
+                saveWordUseCase(
                     query = currentState.inputText,
                     languagePair = Pair(sourceLanguage, targetLanguage),
                     word = word

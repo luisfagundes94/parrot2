@@ -6,8 +6,8 @@ import com.luisfagundes.dictionary.R
 import com.luisfagundes.dictionary.domain.model.SupportedLanguage.English
 import com.luisfagundes.dictionary.domain.model.SupportedLanguage.Portuguese
 import com.luisfagundes.dictionary.domain.model.TranslationParams
-import com.luisfagundes.dictionary.domain.usecase.GetTranslationsUseCase
-import com.luisfagundes.dictionary.domain.usecase.SaveTranslationToHistoryUseCase
+import com.luisfagundes.dictionary.domain.usecase.TranslateWordUseCase
+import com.luisfagundes.dictionary.domain.usecase.SaveWordUseCase
 import com.luisfagundes.dictionary.presentation.translation.TranslationUiState
 import com.luisfagundes.dictionary.presentation.translation.TranslationViewModel
 import com.luisfagundes.dictionary.utils.mockWords
@@ -37,8 +37,8 @@ internal class TranslationViewModelTest {
     @get:Rule
     val mainCoroutineDispatcherRule = MainCoroutineDispatcherRule()
 
-    private val getTranslationsUseCase = mockk<GetTranslationsUseCase>()
-    private val saveTranslationToHistoryUseCase = mockk<SaveTranslationToHistoryUseCase>()
+    private val translateWordUseCase = mockk<TranslateWordUseCase>()
+    private val saveWordUseCase = mockk<SaveWordUseCase>()
     private val resourceProvider = mockk<ResourceProvider>()
     private val testDispatcher = UnconfinedTestDispatcher()
 
@@ -49,8 +49,8 @@ internal class TranslationViewModelTest {
     @Before
     fun setup() {
         viewModel = TranslationViewModel(
-            getTranslationsUseCase = getTranslationsUseCase,
-            saveTranslationToHistoryUseCase = saveTranslationToHistoryUseCase,
+            translateWordUseCase = translateWordUseCase,
+            saveWordUseCase = saveWordUseCase,
             resourceProvider = resourceProvider,
             dispatcher = testDispatcher
         )
@@ -85,7 +85,7 @@ internal class TranslationViewModelTest {
         val inputText = "hello"
 
         coEvery {
-            getTranslationsUseCase.invoke(any())
+            translateWordUseCase.invoke(any())
         } returns flowOf(mockWords)
 
         viewModel.uiState.test {
@@ -107,7 +107,7 @@ internal class TranslationViewModelTest {
         val errorMessage = "Translation not found"
 
         coEvery {
-            getTranslationsUseCase.invoke(any())
+            translateWordUseCase.invoke(any())
         } returns flowOf(emptyList())
 
         every { resourceProvider.getString(R.string.translation_not_found) } returns errorMessage
@@ -132,7 +132,7 @@ internal class TranslationViewModelTest {
         val errorMessage = "Network error"
 
         coEvery {
-            getTranslationsUseCase.invoke(any())
+            translateWordUseCase.invoke(any())
         } returns flow { throw Exception(errorMessage) }
 
         viewModel.uiState.test {
@@ -168,7 +168,7 @@ internal class TranslationViewModelTest {
         val paramsSlot = slot<TranslationParams>()
 
         coEvery {
-            getTranslationsUseCase.invoke(capture(paramsSlot))
+            translateWordUseCase.invoke(capture(paramsSlot))
         } returns flowOf(mockWords)
 
         viewModel.translate(inputText)
@@ -184,7 +184,7 @@ internal class TranslationViewModelTest {
         val paramsSlot = slot<TranslationParams>()
 
         coEvery {
-            getTranslationsUseCase.invoke(capture(paramsSlot))
+            translateWordUseCase.invoke(capture(paramsSlot))
         } returns flowOf(mockWords)
 
         viewModel.swapLanguagePair()
@@ -198,7 +198,7 @@ internal class TranslationViewModelTest {
     @Test
     fun `hasExamples should return true when words have examples`() = runTest {
         coEvery {
-            getTranslationsUseCase.invoke(any())
+            translateWordUseCase.invoke(any())
         } returns flowOf(mockWordsWithExamples)
 
         viewModel.uiState.test {
@@ -216,7 +216,7 @@ internal class TranslationViewModelTest {
     @Test
     fun `hasExamples should return false when words have no examples`() = runTest {
         coEvery {
-            getTranslationsUseCase.invoke(any())
+            translateWordUseCase.invoke(any())
         } returns flowOf(mockWords)
 
         viewModel.uiState.test {
@@ -252,7 +252,7 @@ internal class TranslationViewModelTest {
         val isWordSaved = false
 
         coEvery {
-            saveTranslationToHistoryUseCase.invoke(any(), any(), any())
+            saveWordUseCase.invoke(any(), any(), any())
         } returns Unit
 
         viewModel.uiState.test {
@@ -265,7 +265,7 @@ internal class TranslationViewModelTest {
         }
 
         coVerify {
-            saveTranslationToHistoryUseCase.invoke(
+            saveWordUseCase.invoke(
                 query = initialState.inputText,
                 languagePair = Pair(English, Portuguese),
                 word = word
@@ -287,7 +287,7 @@ internal class TranslationViewModelTest {
         }
 
         coVerify(exactly = 0) {
-            saveTranslationToHistoryUseCase.invoke(any(), any(), any())
+            saveWordUseCase.invoke(any(), any(), any())
         }
     }
 
@@ -298,7 +298,7 @@ internal class TranslationViewModelTest {
         val inputText = "olá"
 
         coEvery {
-            saveTranslationToHistoryUseCase.invoke(any(), any(), any())
+            saveWordUseCase.invoke(any(), any(), any())
         } returns Unit
 
         viewModel.uiState.test {
@@ -317,7 +317,7 @@ internal class TranslationViewModelTest {
         }
 
         coVerify {
-            saveTranslationToHistoryUseCase.invoke(
+            saveWordUseCase.invoke(
                 query = inputText,
                 languagePair = Pair(Portuguese, English),
                 word = word

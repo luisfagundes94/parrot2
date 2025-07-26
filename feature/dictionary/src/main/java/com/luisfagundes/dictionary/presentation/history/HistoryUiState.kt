@@ -1,25 +1,25 @@
 package com.luisfagundes.dictionary.presentation.history
 
 import com.luisfagundes.common.presentation.UiState
-import com.luisfagundes.dictionary.domain.model.TranslationHistoryItem
+import com.luisfagundes.dictionary.domain.model.WordHistory
 
 internal data class HistoryUiState(
-    val historyItems: List<TranslationHistoryItem> = emptyList(),
+    val savedWords: List<WordHistory> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String = "",
     val showClearAllDialog: Boolean = false
 ) : UiState {
     
     val isEmpty: Boolean
-        get() = historyItems.isEmpty() && !isLoading
+        get() = savedWords.isEmpty() && !isLoading
     
     fun setLoading(loading: Boolean) = this.copy(
         isLoading = loading,
         errorMessage = ""
     )
     
-    fun setHistoryItems(items: List<TranslationHistoryItem>) = this.copy(
-        historyItems = items,
+    fun setSavedWords(words: List<WordHistory>) = this.copy(
+        savedWords = words,
         isLoading = false,
         errorMessage = ""
     )

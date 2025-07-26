@@ -22,7 +22,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -45,7 +44,7 @@ internal fun HistoryRoute(
     
     HistoryScreen(
         uiState = uiState.value,
-        onDeleteItem = viewModel::deleteHistoryItem,
+        onDeleteWord = viewModel::deleteWord,
         onClearAll = viewModel::showClearAllDialog,
         onConfirmClearAll = viewModel::clearAllHistory,
         onDismissClearAllDialog = viewModel::hideClearAllDialog
@@ -56,7 +55,7 @@ internal fun HistoryRoute(
 @Composable
 internal fun HistoryScreen(
     uiState: HistoryUiState,
-    onDeleteItem: (Long) -> Unit,
+    onDeleteWord: (Long) -> Unit,
     onClearAll: () -> Unit,
     onConfirmClearAll: () -> Unit,
     onDismissClearAllDialog: () -> Unit,
@@ -73,7 +72,7 @@ internal fun HistoryScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         floatingActionButton = {
-            if (uiState.historyItems.isNotEmpty()) {
+            if (uiState.savedWords.isNotEmpty()) {
                 ExtendedFloatingActionButton(
                     onClick = onClearAll,
                     icon = {
@@ -119,12 +118,12 @@ internal fun HistoryScreen(
                         )
                     ) {
                         items(
-                            items = uiState.historyItems,
+                            items = uiState.savedWords,
                             key = { it.id }
-                        ) { historyItem ->
+                        ) { word ->
                             HistoryItem(
-                                historyItem = historyItem,
-                                onDelete = onDeleteItem
+                                word = word,
+                                onDelete = onDeleteWord
                             )
                         }
                     }

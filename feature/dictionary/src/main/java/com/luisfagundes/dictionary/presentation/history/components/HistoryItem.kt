@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -20,21 +19,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.luisfagundes.common.extensions.formatTimestamp
 import com.luisfagundes.designsystem.theme.spacing
 import com.luisfagundes.dictionary.R
-import com.luisfagundes.dictionary.domain.model.TranslationHistoryItem
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.luisfagundes.dictionary.domain.model.WordHistory
 
 @Composable
 internal fun HistoryItem(
-    historyItem: TranslationHistoryItem,
+    word: WordHistory,
     onDelete: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -61,13 +55,13 @@ internal fun HistoryItem(
                 )
             ) {
                 Text(
-                    text = historyItem.query,
+                    text = word.query,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
-                    text = historyItem.translatedText,
+                    text = word.translatedText,
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -89,12 +83,12 @@ internal fun HistoryItem(
                             )
                     ) {
                         Text(
-                            text = "${historyItem.sourceLanguage.code} → ${historyItem.targetLanguage.code}",
+                            text = "${word.sourceLanguage.code} → ${word.targetLanguage.code}",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }
-                    if (historyItem.partOfSpeech.isNotBlank()) {
+                    if (word.partOfSpeech.isNotBlank()) {
                         Box(
                             modifier = Modifier
                                 .background(
@@ -109,7 +103,7 @@ internal fun HistoryItem(
                                 )
                         ) {
                             Text(
-                                text = historyItem.partOfSpeech,
+                                text = word.partOfSpeech,
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSecondaryContainer
                             )
@@ -117,13 +111,13 @@ internal fun HistoryItem(
                     }
                 }
                 Text(
-                    text = historyItem.timestamp.formatTimestamp(),
+                    text = word.timestamp.formatTimestamp(),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.outline
                 )
             }
             IconButton(
-                onClick = { onDelete(historyItem.id) }
+                onClick = { onDelete(word.id) }
             ) {
                 Icon(
                     imageVector = Icons.Default.Delete,

@@ -1,14 +1,14 @@
 package com.luisfagundes.dictionary.data.mapper
 
 import com.luisfagundes.dictionary.data.database.entities.TranslationHistoryEntity
-import com.luisfagundes.dictionary.domain.model.SaveTranslationParams
+import com.luisfagundes.dictionary.domain.model.SaveWordParams
 import com.luisfagundes.dictionary.domain.model.SupportedLanguage
-import com.luisfagundes.dictionary.domain.model.TranslationHistoryItem
+import com.luisfagundes.dictionary.domain.model.WordHistory
 import javax.inject.Inject
 
-internal class TranslationHistoryMapper @Inject constructor() {
-    fun mapToDomain(source: TranslationHistoryEntity): TranslationHistoryItem {
-        return TranslationHistoryItem(
+internal class WordHistoryMapper @Inject constructor() {
+    fun mapToDomain(source: TranslationHistoryEntity): WordHistory {
+        return WordHistory(
             id = source.id,
             query = source.query,
             sourceLanguage = SupportedLanguage.entries.find { it.code == source.sourceLanguage }
@@ -22,7 +22,7 @@ internal class TranslationHistoryMapper @Inject constructor() {
     }
 
     fun mapToEntity(
-        params: SaveTranslationParams
+        params: SaveWordParams
     ): TranslationHistoryEntity {
         return TranslationHistoryEntity(
             query = params.query,

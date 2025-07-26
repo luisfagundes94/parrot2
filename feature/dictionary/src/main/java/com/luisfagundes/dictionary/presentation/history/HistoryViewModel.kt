@@ -5,11 +5,11 @@ import com.luisfagundes.common.dispatcher.AppDispatcher.IO
 import com.luisfagundes.common.dispatcher.Dispatcher
 import com.luisfagundes.common.presentation.ViewModel
 import com.luisfagundes.common.provider.ResourceProvider
-import com.luisfagundes.dictionary.domain.model.TranslationHistoryItem
+import com.luisfagundes.dictionary.domain.model.WordHistory
 import com.luisfagundes.dictionary.R
-import com.luisfagundes.dictionary.domain.usecase.ClearAllHistoryUseCase
-import com.luisfagundes.dictionary.domain.usecase.DeleteTranslationHistoryUseCase
-import com.luisfagundes.dictionary.domain.usecase.GetTranslationHistoryUseCase
+import com.luisfagundes.dictionary.domain.usecase.ClearAllSavedWordsUseCase
+import com.luisfagundes.dictionary.domain.usecase.DeleteWordUseCase
+import com.luisfagundes.dictionary.domain.usecase.GetSavedWordsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
@@ -20,9 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class HistoryViewModel @Inject constructor(
-    private val getTranslationHistoryUseCase: GetTranslationHistoryUseCase,
-    private val deleteTranslationHistoryUseCase: DeleteTranslationHistoryUseCase,
-    private val clearAllHistoryUseCase: ClearAllHistoryUseCase,
+    private val getSavedWordsUseCase: GetSavedWordsUseCase,
+    private val deleteWordUseCase: DeleteWordUseCase,
+    private val clearAllSavedWordsUseCase: ClearAllSavedWordsUseCase,
     private val resourceProvider: ResourceProvider,
     @param:Dispatcher(IO) private val dispatcher: CoroutineDispatcher
 ) : ViewModel<HistoryUiState>(
@@ -35,18 +35,18 @@ internal class HistoryViewModel @Inject constructor(
 
     fun loadHistory() {
         viewModelScope.launch {
-            getTranslationHistoryUseCase()
+            getSavedWordsUseCase()
                 .flowOn(dispatcher)
                 .onStart { setLoadingState() }
                 .catch { throwable -> setErrorState(throwable.message.toString()) }
-                .collect { historyItems -> setHistoryItems(historyItems) }
+                .collect { savedWords -> setSavedWords(savedWords) }
         }
     }
 
-    fun deleteHistoryItem(id: Long) {
+    fun deleteWord(id: Long) {
         viewModelScope.launch(dispatcher) {
             try {
-                deleteTranslationHistoryUseCase(id)
+                deleteWordUseCase(id)
             } catch (e: Exception) {
                 setErrorState(resourceProvider.getString(R.string.delete_history_error))
             }
@@ -64,7 +64,7 @@ internal class HistoryViewModel @Inject constructor(
     fun clearAllHistory() {
         viewModelScope.launch(dispatcher) {
             try {
-                clearAllHistoryUseCase()
+                clearAllSavedWordsUseCase()
                 hideClearAllDialog()
             } catch (e: Exception) {
                 setErrorState(resourceProvider.getString(R.string.clear_all_history_error))
@@ -81,7 +81,7 @@ internal class HistoryViewModel @Inject constructor(
         updateState { state -> state.setError(message) }
     }
 
-    private fun setHistoryItems(items: List<TranslationHistoryItem>) {
-        updateState { state -> state.setHistoryItems(items) }
+    private fun setSavedWords(words: List<WordHistory>) {
+        updateState { state -> state.setSavedWords(words) }
     }
 }

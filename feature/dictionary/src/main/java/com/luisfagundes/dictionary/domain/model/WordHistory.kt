@@ -1,6 +1,7 @@
 package com.luisfagundes.dictionary.domain.model
 
-internal data class SaveTranslationParams(
+internal data class WordHistory(
+    val id: Long,
     val query: String,
     val sourceLanguage: SupportedLanguage,
     val targetLanguage: SupportedLanguage,
