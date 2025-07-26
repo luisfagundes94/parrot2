@@ -29,7 +29,7 @@ internal class WordRepositoryImpl @Inject constructor(
         )
         return dataSource.getTranslations(request).map { wordResponseList ->
             wordResponseList.map { response ->
-                wordMapper.mapToDomain(response)
+                wordMapper.toDomain(response)
             }
         }
     }
@@ -37,13 +37,13 @@ internal class WordRepositoryImpl @Inject constructor(
     override fun getHistory(): Flow<List<WordHistory>> {
         return localDataSource.getAllHistory().map { entities ->
             entities.map { entity ->
-                wordHistoryMapper.mapToDomain(entity)
+                wordHistoryMapper.toDomain(entity)
             }
         }
     }
     
-    override suspend fun addWordToHistory(params: SaveWordParams) {
-        val entity = wordHistoryMapper.mapToEntity(params)
+    override suspend fun saveWordToHistory(params: SaveWordParams) {
+        val entity = wordHistoryMapper.toEntity(params)
         localDataSource.insertTranslation(entity)
     }
     

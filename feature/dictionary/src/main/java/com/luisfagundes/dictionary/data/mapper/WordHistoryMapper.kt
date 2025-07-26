@@ -7,7 +7,7 @@ import com.luisfagundes.dictionary.domain.model.WordHistory
 import javax.inject.Inject
 
 internal class WordHistoryMapper @Inject constructor() {
-    fun mapToDomain(source: TranslationHistoryEntity): WordHistory {
+    fun toDomain(source: TranslationHistoryEntity): WordHistory {
         return WordHistory(
             id = source.id,
             query = source.query,
@@ -21,7 +21,7 @@ internal class WordHistoryMapper @Inject constructor() {
         )
     }
 
-    fun mapToEntity(
+    fun toEntity(
         params: SaveWordParams
     ): TranslationHistoryEntity {
         return TranslationHistoryEntity(

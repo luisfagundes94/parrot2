@@ -5,7 +5,7 @@ import com.luisfagundes.dictionary.domain.model.AudioLink
 import javax.inject.Inject
 
 internal class AudioLinkMapper @Inject constructor() {
-    fun mapToDomain(source: AudioLinkResponse) = AudioLink(
+    fun toDomain(source: AudioLinkResponse) = AudioLink(
         url = source.url,
         type = source.type.orEmpty()
     )

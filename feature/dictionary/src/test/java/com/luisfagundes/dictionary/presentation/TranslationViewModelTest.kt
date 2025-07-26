@@ -7,7 +7,7 @@ import com.luisfagundes.dictionary.domain.model.SupportedLanguage.English
 import com.luisfagundes.dictionary.domain.model.SupportedLanguage.Portuguese
 import com.luisfagundes.dictionary.domain.model.TranslationParams
 import com.luisfagundes.dictionary.domain.usecase.TranslateWordUseCase
-import com.luisfagundes.dictionary.domain.usecase.AddWordToHistoryUseCase
+import com.luisfagundes.dictionary.domain.usecase.SaveWordToHistoryUseCase
 import com.luisfagundes.dictionary.presentation.translation.TranslationUiState
 import com.luisfagundes.dictionary.presentation.translation.TranslationViewModel
 import com.luisfagundes.dictionary.utils.mockWords
@@ -38,7 +38,7 @@ internal class TranslationViewModelTest {
     val mainCoroutineDispatcherRule = MainCoroutineDispatcherRule()
 
     private val translateWordUseCase = mockk<TranslateWordUseCase>()
-    private val addWordToHistoryUseCase = mockk<AddWordToHistoryUseCase>()
+    private val saveWordToHistoryUseCase = mockk<SaveWordToHistoryUseCase>()
     private val resourceProvider = mockk<ResourceProvider>()
     private val testDispatcher = UnconfinedTestDispatcher()
 
@@ -50,7 +50,7 @@ internal class TranslationViewModelTest {
     fun setup() {
         viewModel = TranslationViewModel(
             translateWordUseCase = translateWordUseCase,
-            addWordToHistoryUseCase = addWordToHistoryUseCase,
+            saveWordToHistoryUseCase = saveWordToHistoryUseCase,
             resourceProvider = resourceProvider,
             dispatcher = testDispatcher
         )
@@ -252,7 +252,7 @@ internal class TranslationViewModelTest {
         val isWordInHistory = false
 
         coEvery {
-            addWordToHistoryUseCase.invoke(any(), any(), any())
+            saveWordToHistoryUseCase.invoke(any(), any(), any())
         } returns Unit
 
         viewModel.uiState.test {
@@ -265,7 +265,7 @@ internal class TranslationViewModelTest {
         }
 
         coVerify {
-            addWordToHistoryUseCase.invoke(
+            saveWordToHistoryUseCase.invoke(
                 query = initialState.inputText,
                 languagePair = Pair(English, Portuguese),
                 word = word
@@ -287,7 +287,7 @@ internal class TranslationViewModelTest {
         }
 
         coVerify(exactly = 0) {
-            addWordToHistoryUseCase.invoke(any(), any(), any())
+            saveWordToHistoryUseCase.invoke(any(), any(), any())
         }
     }
 
@@ -298,7 +298,7 @@ internal class TranslationViewModelTest {
         val inputText = "olá"
 
         coEvery {
-            addWordToHistoryUseCase.invoke(any(), any(), any())
+            saveWordToHistoryUseCase.invoke(any(), any(), any())
         } returns Unit
 
         viewModel.uiState.test {
@@ -317,7 +317,7 @@ internal class TranslationViewModelTest {
         }
 
         coVerify {
-            addWordToHistoryUseCase.invoke(
+            saveWordToHistoryUseCase.invoke(
                 query = inputText,
                 languagePair = Pair(Portuguese, English),
                 word = word

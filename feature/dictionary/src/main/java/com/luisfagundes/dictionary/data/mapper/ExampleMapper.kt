@@ -5,7 +5,7 @@ import com.luisfagundes.dictionary.domain.model.Example
 import javax.inject.Inject
 
 internal class ExampleMapper @Inject constructor() {
-    fun mapToDomain(source: ExampleResponse) = Example(
+    fun toDomain(source: ExampleResponse) = Example(
         sourceLanguage = source.src,
         targetLanguage = source.dst
     )

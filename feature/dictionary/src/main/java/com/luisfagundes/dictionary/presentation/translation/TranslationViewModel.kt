@@ -10,7 +10,7 @@ import com.luisfagundes.dictionary.R
 import com.luisfagundes.dictionary.domain.model.TranslationParams
 import com.luisfagundes.dictionary.domain.model.Word
 import com.luisfagundes.dictionary.domain.usecase.TranslateWordUseCase
-import com.luisfagundes.dictionary.domain.usecase.AddWordToHistoryUseCase
+import com.luisfagundes.dictionary.domain.usecase.SaveWordToHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class TranslationViewModel @Inject constructor(
     private val translateWordUseCase: TranslateWordUseCase,
-    private val addWordToHistoryUseCase: AddWordToHistoryUseCase,
+    private val saveWordToHistoryUseCase: SaveWordToHistoryUseCase,
     private val resourceProvider: ResourceProvider,
     @param:Dispatcher(IO) private val dispatcher: CoroutineDispatcher
 ) : ViewModel<TranslationUiState>(
@@ -60,7 +60,7 @@ internal class TranslationViewModel @Inject constructor(
             val (sourceLanguage, targetLanguage) = currentState.languagePair
 
             try {
-                addWordToHistoryUseCase(
+                saveWordToHistoryUseCase(
                     query = currentState.inputText,
                     languagePair = Pair(sourceLanguage, targetLanguage),
                     word = word

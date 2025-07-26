@@ -11,7 +11,7 @@ internal interface WordRepository {
     
     fun getHistory(): Flow<List<WordHistory>>
     
-    suspend fun addWordToHistory(params: SaveWordParams)
+    suspend fun saveWordToHistory(params: SaveWordParams)
     
     suspend fun deleteWordFromHistory(id: Long)
     

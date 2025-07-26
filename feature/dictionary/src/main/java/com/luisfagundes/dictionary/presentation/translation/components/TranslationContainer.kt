@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.luisfagundes.designsystem.theme.spacing
 
 @Composable
-internal fun ContainerBox(
+internal fun TranslationContainer(
     container: @Composable () -> Unit,
 ) {
     Column(

@@ -8,13 +8,13 @@ internal class WordMapper @Inject constructor(
     private val audioLinkMapper: AudioLinkMapper,
     private val translationMapper: TranslationMapper
 ) {
-    fun mapToDomain(source: WordResponse) = Word(
+    fun toDomain(source: WordResponse) = Word(
         featured = source.featured,
-        text = source.text,
+        translatedText = source.text,
         partOfSpeech = source.pos,
         forms = source.forms,
         grammarInfo = source.grammarInfo.orEmpty(),
-        audioLinks = source.audioLinks.map { audioLinkMapper.mapToDomain(it) },
-        translations = source.translations.map { translationMapper.mapToDomain(it) }
+        audioLinks = source.audioLinks.map { audioLinkMapper.toDomain(it) },
+        translations = source.translations.map { translationMapper.toDomain(it) }
     )
 }

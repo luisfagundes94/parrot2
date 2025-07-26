@@ -7,11 +7,11 @@ import javax.inject.Inject
 internal class TranslationMapper @Inject constructor(
     private val exampleMapper: ExampleMapper,
 ) {
-    fun mapToDomain(source: TranslationResponse) = Translation(
+    fun toDomain(source: TranslationResponse) = Translation(
         featured = source.featured,
         text = source.text,
         partOfSpeech = source.pos,
-        examples = source.examples?.map { exampleMapper.mapToDomain(it) } ?: emptyList(),
+        examples = source.examples?.map { exampleMapper.toDomain(it) } ?: emptyList(),
         usageFrequency = source.usageFrequency.orEmpty()
     )
 }
