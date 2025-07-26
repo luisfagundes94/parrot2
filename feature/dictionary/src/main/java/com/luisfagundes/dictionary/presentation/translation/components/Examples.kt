@@ -77,7 +77,7 @@ private fun getExamplesOf(word: Word): AnnotatedString {
     val annotatedString = buildAnnotatedString {
         append(stringResource(R.string.title_examples_of))
         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-            append(" " + word.translatedText)
+            append(" " + word.text)
         }
     }
     return annotatedString
