@@ -14,7 +14,6 @@ internal class SaveTranslationToHistoryUseCase @Inject constructor(
         targetLanguage: SupportedLanguage,
         word: Word
     ) {
-        // Save the first (most relevant) translation from the word
         val primaryTranslation = word.translations.firstOrNull()
         if (primaryTranslation != null) {
             repository.saveTranslationToHistory(

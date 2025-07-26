@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 internal interface TranslationRepository {
     fun getTranslations(params: TranslationParams): Flow<List<Word>>
     
-    // History operations
     fun getTranslationHistory(): Flow<List<TranslationHistoryItem>>
     
     suspend fun saveTranslationToHistory(
