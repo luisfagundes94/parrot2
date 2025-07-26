@@ -247,7 +247,7 @@ internal class TranslationViewModelTest {
     }
 
     @Test
-    fun `saveTranslationToHistory should save word when not already saved`() = runTest {
+    fun `saveWord should save word when not already saved`() = runTest {
         val word = mockWords.first()
         val isWordSaved = false
 
@@ -258,7 +258,7 @@ internal class TranslationViewModelTest {
         viewModel.uiState.test {
             awaitItem() // Initial state
 
-            viewModel.saveTranslationToHistory(word, isWordSaved)
+            viewModel.saveWord(word, isWordSaved)
 
             val updatedState = awaitItem()
             assertTrue(updatedState.isWordSaved)
@@ -274,14 +274,14 @@ internal class TranslationViewModelTest {
     }
 
     @Test
-    fun `saveTranslationToHistory should not save word when already saved`() = runTest {
+    fun `saveWord should not save word when already saved`() = runTest {
         val word = mockWords.first()
         val isWordSaved = true
 
         viewModel.uiState.test {
             awaitItem() // Initial state
 
-            viewModel.saveTranslationToHistory(word, isWordSaved)
+            viewModel.saveWord(word, isWordSaved)
 
             expectNoEvents()
         }
@@ -292,7 +292,7 @@ internal class TranslationViewModelTest {
     }
 
     @Test
-    fun `saveTranslationToHistory should use current language pair from state`() = runTest {
+    fun `saveWord should use current language pair from state`() = runTest {
         val word = mockWords.first()
         val isWordSaved = false
         val inputText = "olá"
@@ -310,7 +310,7 @@ internal class TranslationViewModelTest {
             viewModel.swapLanguagePair()
             awaitItem() // Swapped language pair state
 
-            viewModel.saveTranslationToHistory(word, isWordSaved)
+            viewModel.saveWord(word, isWordSaved)
 
             val updatedState = awaitItem()
             assertTrue(updatedState.isWordSaved)

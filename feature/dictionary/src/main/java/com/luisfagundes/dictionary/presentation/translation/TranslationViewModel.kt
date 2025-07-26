@@ -52,7 +52,7 @@ internal class TranslationViewModel @Inject constructor(
         updateState { state -> state.copy(languagePair = state.languagePair.swap()) }
     }
 
-    fun saveTranslationToHistory(word: Word, isWordSaved: Boolean) {
+    fun saveWord(word: Word, isWordSaved: Boolean) {
         if (isWordSaved) return
 
         viewModelScope.launch(dispatcher) {
