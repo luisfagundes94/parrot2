@@ -33,8 +33,7 @@ internal class TranslationViewModel @Inject constructor(
             setErrorState(resourceProvider.getString(R.string.blank_input_text_error))
             return
         }
-        
-        // Update input text in state
+
         updateState { state -> state.copy(inputText = text) }
         
         viewModelScope.launch {
@@ -43,12 +42,33 @@ internal class TranslationViewModel @Inject constructor(
                 .flowOn(dispatcher)
                 .onStart { setLoadingState() }
                 .catch { throwable -> setErrorState(throwable.message.toString()) }
-                .collect { words -> handleTranslationResult(words) }
+                .collect { words -> setTranslationResult(words) }
         }
     }
 
     fun swapLanguagePair() {
         updateState { state -> state.copy(languagePair = state.languagePair.swap()) }
+    }
+
+    fun saveTranslationToHistory(word: Word, isWordSaved: Boolean) {
+        if (isWordSaved) return
+
+        viewModelScope.launch(dispatcher) {
+            val currentState = uiState.value
+            val (sourceLanguage, targetLanguage) = currentState.languagePair
+
+            try {
+                saveTranslationToHistoryUseCase(
+                    query = currentState.inputText,
+                    sourceLanguage = sourceLanguage,
+                    targetLanguage = targetLanguage,
+                    word = word
+                )
+                updateState { state -> state.setWordSaved(true) }
+            } catch (e: Exception) {
+                // TODO(implement toast feedback)
+            }
+        }
     }
 
     private fun createTranslationParams(text: String): TranslationParams {
@@ -60,30 +80,9 @@ internal class TranslationViewModel @Inject constructor(
         )
     }
 
-    private fun handleTranslationResult(words: List<Word>) {
-        if (words.isEmpty()) {
-            setErrorState(resourceProvider.getString(R.string.translation_not_found))
-        } else {
-            setSuccessState(words)
-            saveTranslationToHistory(words.first())
-        }
-    }
-    
-    private fun saveTranslationToHistory(word: Word) {
-        viewModelScope.launch(dispatcher) {
-            try {
-                val currentState = uiState.value
-                val (sourceLanguage, targetLanguage) = currentState.languagePair
-                saveTranslationToHistoryUseCase(
-                    query = currentState.inputText,
-                    sourceLanguage = sourceLanguage,
-                    targetLanguage = targetLanguage,
-                    word = word
-                )
-            } catch (e: Exception) {
-                // Silently fail for history saving - don't disturb user experience
-            }
-        }
+    private fun setTranslationResult(words: List<Word>) {
+        if (words.isEmpty()) setErrorState(resourceProvider.getString(R.string.translation_not_found))
+        else setSuccessState(words)
     }
 
     private fun setLoadingState() {

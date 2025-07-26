@@ -13,6 +13,7 @@ internal data class TranslationUiState(
     val words: List<Word> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String = "",
+    val isWordSaved: Boolean = false,
 ) : UiState {
 
     val hasExamples: Boolean
@@ -38,5 +39,9 @@ internal data class TranslationUiState(
         isLoading = false,
         errorMessage = message,
         words = emptyList()
+    )
+
+    fun setWordSaved(isSaved: Boolean) = this.copy(
+        isWordSaved = isSaved
     )
 }

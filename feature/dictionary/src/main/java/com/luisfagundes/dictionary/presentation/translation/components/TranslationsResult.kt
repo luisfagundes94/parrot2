@@ -24,7 +24,9 @@ import com.luisfagundes.dictionary.domain.model.Word
 
 @Composable
 internal fun TranslationsResult(
-    words: List<Word>
+    words: List<Word>,
+    isWordSaved: Boolean,
+    onSaveWordClick: () -> Unit
 ) {
     ContainerBox {
         Row(
@@ -37,15 +39,10 @@ internal fun TranslationsResult(
                 fontWeight = Bold,
             )
             Spacer(modifier = Modifier.weight(1f))
-            IconButton(
-                onClick = {},
-            ) {
-                Icon(
-                    modifier = Modifier.scale(1.1f),
-                    imageVector = Icons.Default.BookmarkAdd,
-                    contentDescription = stringResource(R.string.desc_bookmark_word),
-                )
-            }
+            SaveWordButton(
+                isWordSaved = isWordSaved,
+                onSaveWordClick = onSaveWordClick
+            )
         }
         Spacer(
             modifier = Modifier.padding(vertical = MaterialTheme.spacing.verySmall),

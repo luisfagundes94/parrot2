@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.luisfagundes.designsystem.component.ParrotTextField
 import com.luisfagundes.designsystem.theme.spacing
 import com.luisfagundes.dictionary.R
+import com.luisfagundes.dictionary.domain.model.Word
 import com.luisfagundes.dictionary.presentation.translation.components.ExamplesResult
 import com.luisfagundes.dictionary.presentation.translation.components.LanguageSelector
 import com.luisfagundes.dictionary.presentation.translation.components.TranslationsResult
@@ -40,6 +41,7 @@ internal fun TranslationRoute(
         uiState = uiState,
         onTranslateButtonClick = viewModel::translate,
         onLanguageSwapButtonClick = viewModel::swapLanguagePair,
+        onSaveWordClick = viewModel::saveTranslationToHistory,
         modifier = Modifier
             .verticalScroll(scrollState)
             .padding(MaterialTheme.spacing.default)
@@ -53,6 +55,7 @@ internal fun TranslationScreen(
     modifier: Modifier = Modifier,
     onTranslateButtonClick: (String) -> Unit,
     onLanguageSwapButtonClick: () -> Unit,
+    onSaveWordClick: (Word, Boolean) -> Unit
 ) {
     val textStyle = MaterialTheme.typography.headlineMedium
     var inputText by remember { mutableStateOf("") }
@@ -100,7 +103,9 @@ internal fun TranslationScreen(
         }
         if (uiState.words.isNotEmpty()) {
             TranslationsResult(
-                words = uiState.words
+                words = uiState.words,
+                isWordSaved = uiState.isWordSaved,
+                onSaveWordClick = { onSaveWordClick(uiState.words.first(), uiState.isWordSaved) }
             )
             ExamplesResult(
                 words = uiState.words,

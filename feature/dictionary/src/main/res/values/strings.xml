@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Translation -->
     <string name="feature_translation_title">Translation</string>
     <string name="swap_languages">Swap languages</string>
     <string name="enter_text">Enter text</string>
@@ -11,7 +12,7 @@
     <string name="translation_not_found">Translation not found</string>
     <string name="blank_input_text_error">Enter a word you\'d like to translate</string>
     
-    <!-- History strings -->
+    <!-- History -->
     <string name="history_title">History</string>
     <string name="delete_history_item">Delete history item</string>
     <string name="clear_all">Clear All</string>
@@ -22,4 +23,5 @@
     <string name="empty_history_message">Start translating words to see your history here</string>
     <string name="delete_history_error">Failed to delete history item</string>
     <string name="clear_all_history_error">Failed to clear history</string>
+    <string name="word_saved_to_history">Word saved to history</string>
 </resources>
