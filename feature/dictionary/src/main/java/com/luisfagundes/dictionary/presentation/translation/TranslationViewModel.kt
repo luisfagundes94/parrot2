@@ -10,7 +10,7 @@ import com.luisfagundes.dictionary.R
 import com.luisfagundes.dictionary.domain.model.TranslationParams
 import com.luisfagundes.dictionary.domain.model.Word
 import com.luisfagundes.dictionary.domain.usecase.TranslateWordUseCase
-import com.luisfagundes.dictionary.domain.usecase.SaveWordUseCase
+import com.luisfagundes.dictionary.domain.usecase.AddWordToHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class TranslationViewModel @Inject constructor(
     private val translateWordUseCase: TranslateWordUseCase,
-    private val saveWordUseCase: SaveWordUseCase,
+    private val addWordToHistoryUseCase: AddWordToHistoryUseCase,
     private val resourceProvider: ResourceProvider,
     @param:Dispatcher(IO) private val dispatcher: CoroutineDispatcher
 ) : ViewModel<TranslationUiState>(
@@ -52,15 +52,15 @@ internal class TranslationViewModel @Inject constructor(
         updateState { state -> state.copy(languagePair = state.languagePair.swap()) }
     }
 
-    fun saveWord(word: Word, isWordSaved: Boolean) {
-        if (isWordSaved) return
+    fun addWordToHistory(word: Word, isWordInHistory: Boolean) {
+        if (isWordInHistory) return
 
         viewModelScope.launch(dispatcher) {
             val currentState = uiState.value
             val (sourceLanguage, targetLanguage) = currentState.languagePair
 
             try {
-                saveWordUseCase(
+                addWordToHistoryUseCase(
                     query = currentState.inputText,
                     languagePair = Pair(sourceLanguage, targetLanguage),
                     word = word

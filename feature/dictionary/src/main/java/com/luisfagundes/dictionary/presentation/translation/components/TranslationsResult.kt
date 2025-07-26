@@ -25,7 +25,7 @@ import com.luisfagundes.dictionary.domain.model.Word
 @Composable
 internal fun TranslationsResult(
     words: List<Word>,
-    isWordSaved: Boolean,
+    isWordInHistory: Boolean,
     onSaveWordClick: () -> Unit
 ) {
     ContainerBox {
@@ -40,7 +40,7 @@ internal fun TranslationsResult(
             )
             Spacer(modifier = Modifier.weight(1f))
             SaveWordButton(
-                isWordSaved = isWordSaved,
+                isWordInHistory = isWordInHistory,
                 onSaveWordClick = onSaveWordClick
             )
         }

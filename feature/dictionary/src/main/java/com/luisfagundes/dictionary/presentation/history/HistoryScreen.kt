@@ -44,7 +44,7 @@ internal fun HistoryRoute(
     
     HistoryScreen(
         uiState = uiState.value,
-        onDeleteWord = viewModel::deleteWord,
+        onDeleteWord = viewModel::deleteWordFromHistory,
         onClearAll = viewModel::showClearAllDialog,
         onConfirmClearAll = viewModel::clearAllHistory,
         onDismissClearAllDialog = viewModel::hideClearAllDialog
@@ -72,7 +72,7 @@ internal fun HistoryScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         floatingActionButton = {
-            if (uiState.savedWords.isNotEmpty()) {
+            if (uiState.words.isNotEmpty()) {
                 ExtendedFloatingActionButton(
                     onClick = onClearAll,
                     icon = {
@@ -118,7 +118,7 @@ internal fun HistoryScreen(
                         )
                     ) {
                         items(
-                            items = uiState.savedWords,
+                            items = uiState.words,
                             key = { it.id }
                         ) { word ->
                             HistoryItem(

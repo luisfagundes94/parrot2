@@ -42,7 +42,7 @@ internal class WordRepositoryImpl @Inject constructor(
         }
     }
     
-    override suspend fun saveWordToHistory(params: SaveWordParams) {
+    override suspend fun addWordToHistory(params: SaveWordParams) {
         val entity = wordHistoryMapper.mapToEntity(params)
         localDataSource.insertTranslation(entity)
     }

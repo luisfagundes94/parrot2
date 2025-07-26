@@ -4,22 +4,22 @@ import com.luisfagundes.common.presentation.UiState
 import com.luisfagundes.dictionary.domain.model.WordHistory
 
 internal data class HistoryUiState(
-    val savedWords: List<WordHistory> = emptyList(),
+    val words: List<WordHistory> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String = "",
     val showClearAllDialog: Boolean = false
 ) : UiState {
     
     val isEmpty: Boolean
-        get() = savedWords.isEmpty() && !isLoading
+        get() = words.isEmpty() && !isLoading
     
     fun setLoading(loading: Boolean) = this.copy(
         isLoading = loading,
         errorMessage = ""
     )
     
-    fun setSavedWords(words: List<WordHistory>) = this.copy(
-        savedWords = words,
+    fun setWords(words: List<WordHistory>) = this.copy(
+        words = words,
         isLoading = false,
         errorMessage = ""
     )

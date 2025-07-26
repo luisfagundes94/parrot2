@@ -38,7 +38,7 @@ internal fun TranslationRoute(
         uiState = uiState,
         onTranslateButtonClick = viewModel::translate,
         onLanguageSwapButtonClick = viewModel::swapLanguagePair,
-        onSaveWordClick = viewModel::saveWord,
+        onSaveWordClick = viewModel::addWordToHistory,
         onInputTextChange = viewModel::updateInputText,
         modifier = Modifier
             .verticalScroll(scrollState)
@@ -102,8 +102,13 @@ internal fun TranslationScreen(
         if (uiState.words.isNotEmpty()) {
             TranslationsResult(
                 words = uiState.words,
-                isWordSaved = uiState.isWordSaved,
-                onSaveWordClick = { onSaveWordClick(uiState.words.first(), uiState.isWordSaved) }
+                isWordInHistory = uiState.isWordInHistory,
+                onSaveWordClick = {
+                    onSaveWordClick(
+                        uiState.words.first(),
+                        uiState.isWordInHistory
+                    )
+                }
             )
             ExamplesResult(
                 words = uiState.words,

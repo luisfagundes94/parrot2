@@ -7,7 +7,7 @@ import com.luisfagundes.dictionary.domain.model.SupportedLanguage.English
 import com.luisfagundes.dictionary.domain.model.SupportedLanguage.Portuguese
 import com.luisfagundes.dictionary.domain.model.TranslationParams
 import com.luisfagundes.dictionary.domain.usecase.TranslateWordUseCase
-import com.luisfagundes.dictionary.domain.usecase.SaveWordUseCase
+import com.luisfagundes.dictionary.domain.usecase.AddWordToHistoryUseCase
 import com.luisfagundes.dictionary.presentation.translation.TranslationUiState
 import com.luisfagundes.dictionary.presentation.translation.TranslationViewModel
 import com.luisfagundes.dictionary.utils.mockWords
@@ -38,7 +38,7 @@ internal class TranslationViewModelTest {
     val mainCoroutineDispatcherRule = MainCoroutineDispatcherRule()
 
     private val translateWordUseCase = mockk<TranslateWordUseCase>()
-    private val saveWordUseCase = mockk<SaveWordUseCase>()
+    private val addWordToHistoryUseCase = mockk<AddWordToHistoryUseCase>()
     private val resourceProvider = mockk<ResourceProvider>()
     private val testDispatcher = UnconfinedTestDispatcher()
 
@@ -50,7 +50,7 @@ internal class TranslationViewModelTest {
     fun setup() {
         viewModel = TranslationViewModel(
             translateWordUseCase = translateWordUseCase,
-            saveWordUseCase = saveWordUseCase,
+            addWordToHistoryUseCase = addWordToHistoryUseCase,
             resourceProvider = resourceProvider,
             dispatcher = testDispatcher
         )
@@ -247,25 +247,25 @@ internal class TranslationViewModelTest {
     }
 
     @Test
-    fun `saveWord should save word when not already saved`() = runTest {
+    fun `addWordToHistory should save word when not already saved`() = runTest {
         val word = mockWords.first()
-        val isWordSaved = false
+        val isWordInHistory = false
 
         coEvery {
-            saveWordUseCase.invoke(any(), any(), any())
+            addWordToHistoryUseCase.invoke(any(), any(), any())
         } returns Unit
 
         viewModel.uiState.test {
             awaitItem() // Initial state
 
-            viewModel.saveWord(word, isWordSaved)
+            viewModel.addWordToHistory(word, isWordInHistory)
 
             val updatedState = awaitItem()
-            assertTrue(updatedState.isWordSaved)
+            assertTrue(updatedState.isWordInHistory)
         }
 
         coVerify {
-            saveWordUseCase.invoke(
+            addWordToHistoryUseCase.invoke(
                 query = initialState.inputText,
                 languagePair = Pair(English, Portuguese),
                 word = word
@@ -274,31 +274,31 @@ internal class TranslationViewModelTest {
     }
 
     @Test
-    fun `saveWord should not save word when already saved`() = runTest {
+    fun `addWordToHistory should not save word when already saved`() = runTest {
         val word = mockWords.first()
-        val isWordSaved = true
+        val isWordInHistory = true
 
         viewModel.uiState.test {
             awaitItem() // Initial state
 
-            viewModel.saveWord(word, isWordSaved)
+            viewModel.addWordToHistory(word, isWordInHistory)
 
             expectNoEvents()
         }
 
         coVerify(exactly = 0) {
-            saveWordUseCase.invoke(any(), any(), any())
+            addWordToHistoryUseCase.invoke(any(), any(), any())
         }
     }
 
     @Test
-    fun `saveWord should use current language pair from state`() = runTest {
+    fun `addWordToHistory should use current language pair from state`() = runTest {
         val word = mockWords.first()
-        val isWordSaved = false
+        val isWordInHistory = false
         val inputText = "olá"
 
         coEvery {
-            saveWordUseCase.invoke(any(), any(), any())
+            addWordToHistoryUseCase.invoke(any(), any(), any())
         } returns Unit
 
         viewModel.uiState.test {
@@ -310,14 +310,14 @@ internal class TranslationViewModelTest {
             viewModel.swapLanguagePair()
             awaitItem() // Swapped language pair state
 
-            viewModel.saveWord(word, isWordSaved)
+            viewModel.addWordToHistory(word, isWordInHistory)
 
             val updatedState = awaitItem()
-            assertTrue(updatedState.isWordSaved)
+            assertTrue(updatedState.isWordInHistory)
         }
 
         coVerify {
-            saveWordUseCase.invoke(
+            addWordToHistoryUseCase.invoke(
                 query = inputText,
                 languagePair = Pair(Portuguese, English),
                 word = word

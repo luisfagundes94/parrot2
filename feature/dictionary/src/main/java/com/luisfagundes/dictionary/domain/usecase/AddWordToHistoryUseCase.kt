@@ -6,7 +6,7 @@ import com.luisfagundes.dictionary.domain.model.Word
 import com.luisfagundes.dictionary.domain.repository.WordRepository
 import javax.inject.Inject
 
-internal class SaveWordUseCase @Inject constructor(
+internal class AddWordToHistoryUseCase @Inject constructor(
     private val repository: WordRepository
 ) {
     suspend operator fun invoke(
@@ -24,7 +24,7 @@ internal class SaveWordUseCase @Inject constructor(
                 partOfSpeech = word.partOfSpeech,
                 timestamp = System.currentTimeMillis()
             )
-            repository.saveWordToHistory(params)
+            repository.addWordToHistory(params)
         }
     }
 }

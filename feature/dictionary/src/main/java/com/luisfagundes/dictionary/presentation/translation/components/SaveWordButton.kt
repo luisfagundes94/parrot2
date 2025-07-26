@@ -14,16 +14,16 @@ import com.luisfagundes.dictionary.R
 
 @Composable
 fun SaveWordButton(
-    isWordSaved: Boolean,
+    isWordInHistory: Boolean,
     onSaveWordClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     IconButton(
-        onClick = { if (isWordSaved.not()) onSaveWordClick() },
+        onClick = { if (isWordInHistory.not()) onSaveWordClick() },
         modifier = modifier
     ) {
         when {
-            isWordSaved -> {
+            isWordInHistory -> {
                 Icon(
                     modifier = Modifier.scale(1.1f),
                     imageVector = Icons.Default.BookmarkAdded,
