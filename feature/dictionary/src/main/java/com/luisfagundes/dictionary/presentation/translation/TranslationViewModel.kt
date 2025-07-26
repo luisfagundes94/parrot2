@@ -62,8 +62,7 @@ internal class TranslationViewModel @Inject constructor(
             try {
                 saveTranslationToHistoryUseCase(
                     query = currentState.inputText,
-                    sourceLanguage = sourceLanguage,
-                    targetLanguage = targetLanguage,
+                    languagePair = Pair(sourceLanguage, targetLanguage),
                     word = word
                 )
                 updateState { state -> state.setWordSaved(true) }

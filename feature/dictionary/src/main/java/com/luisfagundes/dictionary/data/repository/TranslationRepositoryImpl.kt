@@ -5,7 +5,7 @@ import com.luisfagundes.dictionary.data.datasource.local.LocalTranslationDataSou
 import com.luisfagundes.dictionary.data.mapper.TranslationHistoryMapper
 import com.luisfagundes.dictionary.data.mapper.WordMapper
 import com.luisfagundes.dictionary.data.model.request.TranslationRequest
-import com.luisfagundes.dictionary.domain.model.SupportedLanguage
+import com.luisfagundes.dictionary.domain.model.SaveTranslationParams
 import com.luisfagundes.dictionary.domain.model.TranslationHistoryItem
 import com.luisfagundes.dictionary.domain.model.TranslationParams
 import com.luisfagundes.dictionary.domain.model.Word
@@ -17,8 +17,8 @@ import javax.inject.Inject
 internal class TranslationRepositoryImpl @Inject constructor(
     private val dataSource: TranslationDataSource,
     private val localDataSource: LocalTranslationDataSource,
-    private val mapper: WordMapper,
-    private val historyMapper: TranslationHistoryMapper,
+    private val wordMapper: WordMapper,
+    private val translationHistoryMapper: TranslationHistoryMapper
 ) : TranslationRepository {
 
     override fun getTranslations(params: TranslationParams): Flow<List<Word>> {
@@ -29,7 +29,7 @@ internal class TranslationRepositoryImpl @Inject constructor(
         )
         return dataSource.getTranslations(request).map { wordResponseList ->
             wordResponseList.map { response ->
-                mapper.map(response)
+                wordMapper.map(response)
             }
         }
     }
@@ -37,27 +37,13 @@ internal class TranslationRepositoryImpl @Inject constructor(
     override fun getTranslationHistory(): Flow<List<TranslationHistoryItem>> {
         return localDataSource.getAllHistory().map { entities ->
             entities.map { entity ->
-                historyMapper.map(entity)
+                translationHistoryMapper.mapToDomain(entity)
             }
         }
     }
     
-    override suspend fun saveTranslationToHistory(
-        query: String,
-        sourceLanguage: SupportedLanguage,
-        targetLanguage: SupportedLanguage,
-        translatedText: String,
-        partOfSpeech: String,
-        timestamp: Long
-    ) {
-        val entity = historyMapper.mapToEntity(
-            query = query,
-            sourceLanguage = sourceLanguage,
-            targetLanguage = targetLanguage,
-            translatedText = translatedText,
-            partOfSpeech = partOfSpeech,
-            timestamp = timestamp
-        )
+    override suspend fun saveTranslationToHistory(params: SaveTranslationParams) {
+        val entity = translationHistoryMapper.mapToEntity(params)
         localDataSource.insertTranslation(entity)
     }
     

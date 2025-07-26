@@ -1,6 +1,6 @@
 package com.luisfagundes.dictionary.domain.repository
 
-import com.luisfagundes.dictionary.domain.model.SupportedLanguage
+import com.luisfagundes.dictionary.domain.model.SaveTranslationParams
 import com.luisfagundes.dictionary.domain.model.TranslationHistoryItem
 import com.luisfagundes.dictionary.domain.model.TranslationParams
 import com.luisfagundes.dictionary.domain.model.Word
@@ -11,14 +11,7 @@ internal interface TranslationRepository {
     
     fun getTranslationHistory(): Flow<List<TranslationHistoryItem>>
     
-    suspend fun saveTranslationToHistory(
-        query: String,
-        sourceLanguage: SupportedLanguage,
-        targetLanguage: SupportedLanguage,
-        translatedText: String,
-        partOfSpeech: String,
-        timestamp: Long
-    )
+    suspend fun saveTranslationToHistory(params: SaveTranslationParams)
     
     suspend fun deleteTranslationHistory(id: Long)
     

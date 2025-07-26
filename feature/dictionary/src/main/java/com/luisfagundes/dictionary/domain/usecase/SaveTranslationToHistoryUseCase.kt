@@ -1,5 +1,6 @@
 package com.luisfagundes.dictionary.domain.usecase
 
+import com.luisfagundes.dictionary.domain.model.SaveTranslationParams
 import com.luisfagundes.dictionary.domain.model.SupportedLanguage
 import com.luisfagundes.dictionary.domain.model.Word
 import com.luisfagundes.dictionary.domain.repository.TranslationRepository
@@ -10,20 +11,20 @@ internal class SaveTranslationToHistoryUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         query: String,
-        sourceLanguage: SupportedLanguage,
-        targetLanguage: SupportedLanguage,
+        languagePair: Pair<SupportedLanguage, SupportedLanguage>,
         word: Word
     ) {
         val primaryTranslation = word.translations.firstOrNull()
         if (primaryTranslation != null) {
-            repository.saveTranslationToHistory(
+            val params = SaveTranslationParams(
                 query = query,
-                sourceLanguage = sourceLanguage,
-                targetLanguage = targetLanguage,
+                sourceLanguage = languagePair.first,
+                targetLanguage = languagePair.second,
                 translatedText = primaryTranslation.text,
                 partOfSpeech = word.partOfSpeech,
                 timestamp = System.currentTimeMillis()
             )
+            repository.saveTranslationToHistory(params)
         }
     }
 }
