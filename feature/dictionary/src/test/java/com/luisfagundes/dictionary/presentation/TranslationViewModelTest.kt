@@ -251,7 +251,9 @@ internal class TranslationViewModelTest {
         val word = mockWords.first()
         val isWordSaved = false
 
-        coEvery { saveTranslationToHistoryUseCase.invoke(any(), any(), any(), any()) } returns Unit
+        coEvery {
+            saveTranslationToHistoryUseCase.invoke(any(), any(), any())
+        } returns Unit
 
         viewModel.uiState.test {
             awaitItem() // Initial state
@@ -265,8 +267,7 @@ internal class TranslationViewModelTest {
         coVerify {
             saveTranslationToHistoryUseCase.invoke(
                 query = initialState.inputText,
-                sourceLanguage = English,
-                targetLanguage = Portuguese,
+                languagePair = Pair(English, Portuguese),
                 word = word
             )
         }
@@ -286,7 +287,7 @@ internal class TranslationViewModelTest {
         }
 
         coVerify(exactly = 0) {
-            saveTranslationToHistoryUseCase.invoke(any(), any(), any(), any())
+            saveTranslationToHistoryUseCase.invoke(any(), any(), any())
         }
     }
 
@@ -296,7 +297,9 @@ internal class TranslationViewModelTest {
         val isWordSaved = false
         val inputText = "olá"
 
-        coEvery { saveTranslationToHistoryUseCase.invoke(any(), any(), any(), any()) } returns Unit
+        coEvery {
+            saveTranslationToHistoryUseCase.invoke(any(), any(), any())
+        } returns Unit
 
         viewModel.uiState.test {
             awaitItem() // Initial state
@@ -316,8 +319,7 @@ internal class TranslationViewModelTest {
         coVerify {
             saveTranslationToHistoryUseCase.invoke(
                 query = inputText,
-                sourceLanguage = Portuguese,
-                targetLanguage = English,
+                languagePair = Pair(Portuguese, English),
                 word = word
             )
         }
