@@ -5,7 +5,7 @@ import com.luisfagundes.dictionary.domain.repository.WordRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-internal class GetWordHistoryUseCase @Inject constructor(
+internal class GetAllWordsFromHistory @Inject constructor(
     private val repository: WordRepository
 ) {
     operator fun invoke(): Flow<List<WordHistory>> {

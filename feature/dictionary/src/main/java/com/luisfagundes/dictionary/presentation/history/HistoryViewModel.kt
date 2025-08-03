@@ -7,9 +7,9 @@ import com.luisfagundes.common.presentation.ViewModel
 import com.luisfagundes.common.provider.ResourceProvider
 import com.luisfagundes.dictionary.domain.model.WordHistory
 import com.luisfagundes.dictionary.R
-import com.luisfagundes.dictionary.domain.usecase.ClearWordHistoryUseCase
+import com.luisfagundes.dictionary.domain.usecase.ClearAllWordsFromHistoryUseCase
 import com.luisfagundes.dictionary.domain.usecase.DeleteWordFromHistoryUseCase
-import com.luisfagundes.dictionary.domain.usecase.GetWordHistoryUseCase
+import com.luisfagundes.dictionary.domain.usecase.GetAllWordsFromHistory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
@@ -20,9 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class HistoryViewModel @Inject constructor(
-    private val getWordHistoryUseCase: GetWordHistoryUseCase,
+    private val getAllWordsFromHistory: GetAllWordsFromHistory,
     private val deleteWordFromHistoryUseCase: DeleteWordFromHistoryUseCase,
-    private val clearWordHistoryUseCase: ClearWordHistoryUseCase,
+    private val clearAllWordsFromHistoryUseCase: ClearAllWordsFromHistoryUseCase,
     private val resourceProvider: ResourceProvider,
     @param:Dispatcher(IO) private val dispatcher: CoroutineDispatcher
 ) : ViewModel<HistoryUiState>(
@@ -35,7 +35,7 @@ internal class HistoryViewModel @Inject constructor(
 
     fun loadWordHistory() {
         viewModelScope.launch {
-            getWordHistoryUseCase()
+            getAllWordsFromHistory()
                 .flowOn(dispatcher)
                 .onStart { setLoadingState() }
                 .catch { throwable -> setErrorState(throwable.message.toString()) }
@@ -64,7 +64,7 @@ internal class HistoryViewModel @Inject constructor(
     fun clearAllHistory() {
         viewModelScope.launch(dispatcher) {
             try {
-                clearWordHistoryUseCase()
+                clearAllWordsFromHistoryUseCase()
                 hideClearAllDialog()
             } catch (e: Exception) {
                 setErrorState(resourceProvider.getString(R.string.clear_all_history_error))
