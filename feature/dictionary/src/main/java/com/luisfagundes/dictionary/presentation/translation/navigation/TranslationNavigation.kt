@@ -12,8 +12,12 @@ import kotlinx.serialization.Serializable
 fun NavController.navigateToTranslation(navOptions: NavOptions) =
     navigate(route = TranslationRoute, navOptions)
 
-fun NavGraphBuilder.translationScreen() {
+fun NavGraphBuilder.translationScreen(
+    onNavigateToLanguageSelection: (languageCode: String, isSourceLanguage: Boolean) -> Unit
+) {
     composable<TranslationRoute> {
-        TranslationRoute()
+        TranslationRoute(
+            onNavigateToLanguageSelection = onNavigateToLanguageSelection
+        )
     }
 }

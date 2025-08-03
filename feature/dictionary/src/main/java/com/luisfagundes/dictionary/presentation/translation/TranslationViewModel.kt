@@ -9,6 +9,7 @@ import com.luisfagundes.common.provider.ResourceProvider
 import com.luisfagundes.dictionary.R
 import com.luisfagundes.dictionary.domain.model.TranslationParams
 import com.luisfagundes.dictionary.domain.model.Word
+import com.luisfagundes.dictionary.domain.usecase.GetLanguagePairUseCase
 import com.luisfagundes.dictionary.domain.usecase.TranslateWordUseCase
 import com.luisfagundes.dictionary.domain.usecase.SaveWordToHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,11 +24,16 @@ import javax.inject.Inject
 internal class TranslationViewModel @Inject constructor(
     private val translateWordUseCase: TranslateWordUseCase,
     private val saveWordToHistoryUseCase: SaveWordToHistoryUseCase,
+    private val getLanguagePairUseCase: GetLanguagePairUseCase,
     private val resourceProvider: ResourceProvider,
     @param:Dispatcher(IO) private val dispatcher: CoroutineDispatcher
 ) : ViewModel<TranslationUiState>(
     initialState = TranslationUiState()
 ) {
+    init {
+        setLanguagePair()
+    }
+
     fun translate(text: String) {
         if (text.isBlank()) {
             setErrorState(resourceProvider.getString(R.string.blank_input_text_error))
@@ -57,12 +63,11 @@ internal class TranslationViewModel @Inject constructor(
 
         viewModelScope.launch(dispatcher) {
             val currentState = uiState.value
-            val (sourceLanguage, targetLanguage) = currentState.languagePair
 
             try {
                 saveWordToHistoryUseCase(
                     query = currentState.inputText,
-                    languagePair = Pair(sourceLanguage, targetLanguage),
+                    languagePair = currentState.languagePair,
                     word = word
                 )
                 updateState { state -> state.setWordSaved(true) }
@@ -70,6 +75,13 @@ internal class TranslationViewModel @Inject constructor(
                 // TODO(implement toast feedback)
             }
         }
+    }
+
+    private fun setLanguagePair() = viewModelScope.launch {
+        getLanguagePairUseCase.invoke()
+            .collect { languagePair ->
+                updateState { state -> state.setLanguagePair(languagePair) }
+            }
     }
 
     private fun createTranslationParams(text: String): TranslationParams {

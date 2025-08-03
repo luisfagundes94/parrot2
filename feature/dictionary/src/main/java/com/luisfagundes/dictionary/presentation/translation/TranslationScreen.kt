@@ -29,6 +29,7 @@ import com.luisfagundes.dictionary.presentation.translation.components.Translati
 
 @Composable
 internal fun TranslationRoute(
+    onNavigateToLanguageSelection: (languageCode: String, isSourceLanguage: Boolean) -> Unit,
     viewModel: TranslationViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -36,6 +37,9 @@ internal fun TranslationRoute(
 
     TranslationScreen(
         uiState = uiState,
+        onLanguageButtonClick = { languageCode, isSourceLanguage ->
+            onNavigateToLanguageSelection(languageCode, isSourceLanguage)
+        },
         onTranslateButtonClick = viewModel::translate,
         onLanguageSwapButtonClick = viewModel::swapLanguagePair,
         onSaveWordClick = viewModel::addWordToHistory,
@@ -51,6 +55,7 @@ internal fun TranslationRoute(
 internal fun TranslationScreen(
     uiState: TranslationUiState,
     modifier: Modifier = Modifier,
+    onLanguageButtonClick: (languageCode: String, isSourceLanguage: Boolean) -> Unit,
     onTranslateButtonClick: (String) -> Unit,
     onLanguageSwapButtonClick: () -> Unit,
     onSaveWordClick: (Word, Boolean) -> Unit,
@@ -63,11 +68,14 @@ internal fun TranslationScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
+        val sourceLanguage = uiState.languagePair.sourceLanguage
+        val targetLanguage = uiState.languagePair.targetLanguage
+
         LanguageSelector(
-            sourceLang = uiState.languagePair.first.name,
-            targetLang = uiState.languagePair.second.name,
-            onSourceLanguageButtonClick = {},
-            onTargetLanguageButtonClick = {},
+            sourceLang = sourceLanguage.name,
+            targetLang = targetLanguage.name,
+            onSourceLanguageButtonClick = { onLanguageButtonClick(sourceLanguage.code, true) },
+            onTargetLanguageButtonClick = { onLanguageButtonClick(targetLanguage.code, false) },
             onLanguageSwapButtonClick = onLanguageSwapButtonClick,
             modifier = Modifier.fillMaxWidth()
         )

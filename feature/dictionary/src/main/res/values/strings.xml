@@ -24,4 +24,6 @@
     <string name="delete_history_error">Failed to delete history item</string>
     <string name="clear_all_history_error">Failed to clear history</string>
     <string name="word_saved_to_history">Word saved to history</string>
+    <string name="select_source_language">Select Source Language</string>
+    <string name="select_target_language">Select Target Language</string>
 </resources>

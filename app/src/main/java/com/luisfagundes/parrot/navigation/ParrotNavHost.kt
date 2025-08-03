@@ -7,6 +7,8 @@ import com.luisfagundes.parrot.ui.ParrotAppState
 import com.luisfagundes.dictionary.presentation.translation.navigation.TranslationRoute
 import com.luisfagundes.dictionary.presentation.translation.navigation.translationScreen
 import com.luisfagundes.dictionary.presentation.history.navigation.historyScreen
+import com.luisfagundes.dictionary.presentation.languageselection.navigation.languageSelectionScreen
+import com.luisfagundes.dictionary.presentation.languageselection.navigation.navigateToLanguageSelection
 
 @Composable
 fun ParrotNavHost(
@@ -20,7 +22,22 @@ fun ParrotNavHost(
         startDestination = TranslationRoute,
         modifier = modifier,
     ) {
-        translationScreen()
+        // Top Level Destinations
+        translationScreen(
+            onNavigateToLanguageSelection = { languageCode, isFromSource ->
+                navController.navigateToLanguageSelection(
+                    currentLanguageCode = languageCode,
+                    isSourceLanguage = isFromSource
+                )
+            }
+        )
         historyScreen()
+
+        // Other
+        languageSelectionScreen(
+            onLanguageSaved = {
+                navController.popBackStack()
+            }
+        )
     }
 }

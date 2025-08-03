@@ -1,6 +1,8 @@
 package com.luisfagundes.dictionary.di
 
+import com.luisfagundes.dictionary.data.repository.LanguagePairRepositoryImpl
 import com.luisfagundes.dictionary.data.repository.WordRepositoryImpl
+import com.luisfagundes.dictionary.domain.repository.LanguagePairRepository
 import com.luisfagundes.dictionary.domain.repository.WordRepository
 import dagger.Binds
 import dagger.Module
@@ -15,4 +17,9 @@ internal abstract class RepositoryModule {
     abstract fun bindTranslationRepository(
         impl: WordRepositoryImpl
     ): WordRepository
+
+    @Binds
+    abstract fun bindLanguagePairRepository(
+        impl: LanguagePairRepositoryImpl
+    ): LanguagePairRepository
 }
