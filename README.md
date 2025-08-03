@@ -131,6 +131,8 @@ The project includes comprehensive testing at multiple levels:
 - **Domain Layer**: Use cases, models, and business logic for translations
 - **Presentation Layer**: Organized by feature area
   - `translation/`: Translation screen, ViewModel, and UI components
+  - `history/`: History screen, ViewModel, and UI components
+  - `languageselection/`: Language Selection screen, ViewModel, and UI components
   - `navigation/`: Type-safe navigation setup for dictionary features
 
 ## 🎨 UI/UX
