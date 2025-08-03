@@ -61,7 +61,7 @@ class ParrotAppState(
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
 
-    val shouldShowBottomBar: Boolean
+    val isTopLevelDestination: Boolean
         @Composable get() = currentTopLevelDestination != null
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {

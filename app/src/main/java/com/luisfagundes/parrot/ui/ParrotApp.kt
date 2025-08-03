@@ -58,73 +58,95 @@ internal fun InternalParrotApp(
     windowAdaptiveInfo: WindowAdaptiveInfo = currentWindowAdaptiveInfo(),
 ) {
     val currentDestination = appState.currentDestination
+    val isTopLevelDestination = appState.isTopLevelDestination
 
-    ParrotNavigationSuiteScaffold(
-        navigationSuiteItems = {
-            appState.topLevelDestinations.forEach { destination ->
-                val selected = currentDestination.isRouteInHierarchy(destination.route)
-                item(
-                    selected = selected,
-                    onClick = { appState.navigateToTopLevelDestination(destination) },
-                    icon = {
-                        Icon(
-                            imageVector = destination.unselectedIcon,
-                            contentDescription = null,
-                        )
-                    },
-                    selectedIcon = {
-                        Icon(
-                            imageVector = destination.selectedIcon,
-                            contentDescription = null,
-                        )
-                    },
-                    label = { Text(stringResource(destination.iconTextId)) },
-                    modifier = Modifier.testTag("ParrotNavItem")
-                )
-            }
-        },
-        windowAdaptiveInfo = windowAdaptiveInfo,
-    ) {
-        Scaffold(
-            modifier = modifier.semantics { testTagsAsResourceId = true },
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.onBackground,
-            contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        ) { padding ->
-            Column(
-                Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .consumeWindowInsets(padding)
-                    .windowInsetsPadding(
-                        WindowInsets.safeDrawing.only(
-                            WindowInsetsSides.Horizontal + WindowInsetsSides.Top
-                        ),
-                    ),
-            ) {
-                val destination = appState.currentTopLevelDestination
-                val isTopLevelDestination = appState.topLevelDestinations.any { destination ->
-                    currentDestination.isRouteInHierarchy(destination.route)
-                }
-                val shouldShowTopAppBar = currentDestination != null && isTopLevelDestination.not()
-
-                if (shouldShowTopAppBar) {
-                    ParrotTopAppBar(
-                        title = stringResource(
-                            destination?.titleTextId ?: R.string.app_name
-                        ),
-                        navigationIcon = Icons.AutoMirrored.Default.ArrowBack,
-                        navigationIconContentDescription = stringResource(
-                            id = R.string.arrow_back_content_description
-                        ),
-                        onNavigationClick = { appState.navController.popBackStack() }
+    if (isTopLevelDestination) {
+        ParrotNavigationSuiteScaffold(
+            navigationSuiteItems = {
+                appState.topLevelDestinations.forEach { destination ->
+                    val selected = currentDestination.isRouteInHierarchy(destination.route)
+                    item(
+                        selected = selected,
+                        onClick = { appState.navigateToTopLevelDestination(destination) },
+                        icon = {
+                            Icon(
+                                imageVector = destination.unselectedIcon,
+                                contentDescription = null,
+                            )
+                        },
+                        selectedIcon = {
+                            Icon(
+                                imageVector = destination.selectedIcon,
+                                contentDescription = null,
+                            )
+                        },
+                        label = { Text(stringResource(destination.iconTextId)) },
+                        modifier = Modifier.testTag("ParrotNavItem")
                     )
                 }
+            },
+            windowAdaptiveInfo = windowAdaptiveInfo,
+        ) {
+            ParrotScaffoldContent(
+                appState = appState,
+                modifier = modifier
+            )
+        }
+    } else {
+        ParrotScaffoldContent(
+            appState = appState,
+            modifier = modifier
+        )
+    }
+}
 
-                ParrotNavHost(
-                    appState = appState,
+@Composable
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+private fun ParrotScaffoldContent(
+    appState: ParrotAppState,
+    modifier: Modifier = Modifier
+) {
+    val currentDestination = appState.currentDestination
+    
+    Scaffold(
+        modifier = modifier.semantics { testTagsAsResourceId = true },
+        containerColor = MaterialTheme.colorScheme.background,
+        contentColor = MaterialTheme.colorScheme.onBackground,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+    ) { padding ->
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .consumeWindowInsets(padding)
+                .windowInsetsPadding(
+                    WindowInsets.safeDrawing.only(
+                        WindowInsetsSides.Horizontal + WindowInsetsSides.Top
+                    ),
+                ),
+        ) {
+            val destination = appState.currentTopLevelDestination
+            val isTopLevelDestination = appState.topLevelDestinations.any { destination ->
+                currentDestination.isRouteInHierarchy(destination.route)
+            }
+            val shouldShowTopAppBar = currentDestination != null && isTopLevelDestination.not()
+
+            if (shouldShowTopAppBar) {
+                ParrotTopAppBar(
+                    title = stringResource(
+                        destination?.titleTextId ?: R.string.app_name
+                    ),
+                    navigationIcon = Icons.AutoMirrored.Default.ArrowBack,
+                    navigationIconContentDescription = stringResource(
+                        id = R.string.arrow_back_content_description
+                    ),
+                    onNavigationClick = { appState.navController.popBackStack() }
                 )
             }
+
+            ParrotNavHost(
+                appState = appState,
+            )
         }
     }
 }
