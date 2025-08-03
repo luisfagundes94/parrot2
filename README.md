@@ -15,6 +15,7 @@
 <p float="left">
   <img src="https://github.com/luisfagundes94/parrot2/blob/master/screenshot/translation.png?raw=true" width="200" /> 
   <img src="https://github.com/luisfagundes94/parrot2/blob/master/screenshot/history.png?raw=true" width="200" /> 
+  <img src="https://github.com/luisfagundes94/parrot2/blob/master/screenshot/language.png?raw=true" width="200" /> 
 </p>
 
 ## 🏗️ Architecture
