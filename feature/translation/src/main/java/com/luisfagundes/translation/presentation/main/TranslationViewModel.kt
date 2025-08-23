@@ -57,8 +57,8 @@ internal class TranslationViewModel @Inject constructor(
         updateState { state -> state.copy(languagePair = state.languagePair.swap()) }
     }
 
-    fun saveWord(word: Word, isWordInHistory: Boolean) {
-        if (isWordInHistory) return
+    fun saveWord(word: Word, isWordSaved: Boolean) {
+        if (isWordSaved) return
 
         viewModelScope.launch(dispatcher) {
             val currentState = uiState.value
@@ -69,7 +69,7 @@ internal class TranslationViewModel @Inject constructor(
                     languagePair = currentState.languagePair,
                     word = word
                 )
-                updateState { state -> state.setWordSaved(true) }
+                updateState { state -> state.setIsWordSaved(true) }
             } catch (e: Exception) {
                 // TODO(implement toast feedback)
             }
