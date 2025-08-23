@@ -71,7 +71,7 @@ internal fun TranslationScreen(
 
     if (showWordReminderDialog) {
         WordReminderDialog(
-            onDismissRequest = { },
+            onDismissRequest = { showWordReminderDialog = false },
             onSetReminder = { _, _ -> }
         )
     }
