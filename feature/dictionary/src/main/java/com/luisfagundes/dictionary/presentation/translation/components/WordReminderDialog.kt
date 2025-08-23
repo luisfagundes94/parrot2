@@ -32,7 +32,7 @@ import com.luisfagundes.designsystem.theme.spacing
 import com.luisfagundes.dictionary.R
 
 @Composable
-internal fun ReminderDialog(
+internal fun WordReminderDialog(
     onDismissRequest: () -> Unit,
     onSetReminder: (frequency: ReminderFrequency, duration: ReminderDuration) -> Unit,
     modifier: Modifier = Modifier
@@ -166,7 +166,7 @@ internal fun ReminderDialogPreview() {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            ReminderDialog(
+            WordReminderDialog(
                 onDismissRequest = {},
                 onSetReminder = { _, _ -> },
                 modifier = Modifier.fillMaxWidth()
