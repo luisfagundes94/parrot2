@@ -46,7 +46,7 @@ internal fun TranslationRoute(
         },
         onTranslateButtonClick = viewModel::translate,
         onLanguageSwapButtonClick = viewModel::swapLanguagePair,
-        onSaveWordClick = viewModel::addWordToHistory,
+        onSaveWordClick = viewModel::saveWord,
         onInputTextChange = viewModel::updateInputText,
         modifier = Modifier
             .verticalScroll(scrollState)
