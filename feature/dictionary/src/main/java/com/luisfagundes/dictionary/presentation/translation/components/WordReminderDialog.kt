@@ -47,7 +47,6 @@ internal fun WordReminderDialog(
             modifier = modifier,
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
                 modifier = Modifier.padding(MaterialTheme.spacing.default)
             ) {
                 Text(
@@ -55,95 +54,121 @@ internal fun WordReminderDialog(
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onSurface
                 )
+                Spacer(
+                    modifier = Modifier.height(MaterialTheme.spacing.default)
+                )
                 Text(
                     text = stringResource(R.string.reminder_dialog_description),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(
-                    modifier = Modifier.height(MaterialTheme.spacing.small)
+                    modifier = Modifier.height(MaterialTheme.spacing.default)
                 )
-                Text(
-                    text = stringResource(R.string.reminder_frequency_label),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurface
+                FrequencyOptions(
+                    selectedFrequency = selectedFrequency,
+                    onSelectFrequency = { selectedFrequency = it }
                 )
-                ReminderFrequency.entries.forEach { frequency ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .selectable(
-                                selected = selectedFrequency == frequency,
-                                onClick = { selectedFrequency = frequency }
-                            )
-                            .padding(horizontal = MaterialTheme.spacing.verySmall),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        RadioButton(
-                            selected = selectedFrequency == frequency,
-                            onClick = { selectedFrequency = frequency }
-                        )
-                        Text(
-                            text = stringResource(frequency.labelRes),
-                            modifier = Modifier.padding(start = MaterialTheme.spacing.small),
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
-                }
-                Spacer(
-                    modifier = Modifier.height(MaterialTheme.spacing.small)
-                )
-                Text(
-                    text = stringResource(R.string.reminder_duration_label),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                ReminderDuration.entries.forEach { duration ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .selectable(
-                                selected = selectedDuration == duration,
-                                onClick = { selectedDuration = duration }
-                            )
-                            .padding(horizontal = MaterialTheme.spacing.verySmall),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        RadioButton(
-                            selected = selectedDuration == duration,
-                            onClick = { selectedDuration = duration }
-                        )
-                        Text(
-                            text = stringResource(duration.labelRes),
-                            modifier = Modifier.padding(start = MaterialTheme.spacing.small),
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
-                }
                 Spacer(
                     modifier = Modifier.height(MaterialTheme.spacing.default)
                 )
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    TextButton(
-                        onClick = onDismissRequest
-                    ) {
-                        Text(text = stringResource(R.string.cancel))
-                    }
-                    Spacer(
-                        modifier = Modifier.width(MaterialTheme.spacing.verySmall)
-                    )
-                    Button(
-                        onClick = {
-                            onSetReminder(selectedFrequency, selectedDuration)
-                        }
-                    ) {
-                        Text(text = stringResource(R.string.set_reminder))
-                    }
-                }
+                DurationOptions(
+                    selectedDuration = selectedDuration,
+                    onSelectDuration = { selectedDuration = it }
+                )
+                Spacer(
+                    modifier = Modifier.height(MaterialTheme.spacing.default)
+                )
+                ActionButtons(
+                    onDismissRequest = onDismissRequest,
+                    onSetReminder = onSetReminder,
+                    selectedFrequency = selectedFrequency,
+                    selectedDuration = selectedDuration
+                )
             }
+        }
+    }
+}
+
+@Composable
+private fun ActionButtons(
+    onDismissRequest: () -> Unit,
+    onSetReminder: (ReminderFrequency, ReminderDuration) -> Unit,
+    selectedFrequency: ReminderFrequency,
+    selectedDuration: ReminderDuration
+) {
+    Row(
+        horizontalArrangement = Arrangement.End,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        TextButton(
+            onClick = onDismissRequest
+        ) {
+            Text(text = stringResource(R.string.cancel))
+        }
+        Spacer(
+            modifier = Modifier.width(MaterialTheme.spacing.verySmall)
+        )
+        Button(
+            onClick = {
+                onSetReminder(selectedFrequency, selectedDuration)
+            }
+        ) {
+            Text(text = stringResource(R.string.set_reminder))
+        }
+    }
+}
+
+@Composable
+private fun FrequencyOptions(
+    selectedFrequency: ReminderFrequency,
+    onSelectFrequency: (ReminderFrequency) -> Unit
+) {
+    Text(
+        text = stringResource(R.string.reminder_frequency_label),
+        style = MaterialTheme.typography.labelLarge,
+        color = MaterialTheme.colorScheme.onSurface
+    )
+    ReminderFrequency.entries.forEach { frequency ->
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = selectedFrequency == frequency,
+                onClick = { onSelectFrequency(frequency) }
+            )
+            Text(
+                text = stringResource(frequency.labelRes),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+    }
+}
+
+@Composable
+private fun DurationOptions(
+    selectedDuration: ReminderDuration,
+    onSelectDuration: (ReminderDuration) -> Unit
+) {
+    Text(
+        text = stringResource(R.string.reminder_duration_label),
+        style = MaterialTheme.typography.labelLarge,
+        color = MaterialTheme.colorScheme.onSurface
+    )
+    ReminderDuration.entries.forEach { duration ->
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = selectedDuration == duration,
+                onClick = { onSelectDuration(duration)}
+            )
+            Text(
+                text = stringResource(duration.labelRes),
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }
