@@ -27,7 +27,7 @@ internal class TranslationRepositoryImpl @Inject constructor(
             src = params.sourceLanguage,
             dst = params.targetLanguage
         )
-        return dataSource.getTranslations(request).map { wordResponseList ->
+        return dataSource.translateText(request).map { wordResponseList ->
             wordResponseList.map { response ->
                 wordMapper.toDomain(response)
             }

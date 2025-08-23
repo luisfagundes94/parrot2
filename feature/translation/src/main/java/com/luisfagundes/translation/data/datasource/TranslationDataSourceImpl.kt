@@ -11,7 +11,7 @@ import javax.inject.Inject
 internal class TranslationDataSourceImpl @Inject constructor(
     private val apiService: LingueeApiService
 ) : TranslationDataSource {
-    override fun getTranslations(request: TranslationRequest): Flow<List<WordResponse>> = flow {
+    override fun translateText(request: TranslationRequest): Flow<List<WordResponse>> = flow {
         emit(
             apiService.getTranslations(
                 query = request.query,
