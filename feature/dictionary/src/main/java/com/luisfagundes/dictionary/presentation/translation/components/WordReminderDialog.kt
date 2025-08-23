@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -34,11 +33,11 @@ import com.luisfagundes.dictionary.R
 @Composable
 internal fun WordReminderDialog(
     onDismissRequest: () -> Unit,
-    onSetReminder: (frequency: ReminderFrequency, duration: ReminderDuration) -> Unit,
+    onSetReminder: (frequency: UiReminderFrequency, duration: UiReminderDuration) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var selectedFrequency by remember { mutableStateOf(ReminderFrequency.DAILY) }
-    var selectedDuration by remember { mutableStateOf(ReminderDuration.ONE_WEEK) }
+    var selectedFrequency by remember { mutableStateOf(UiReminderFrequency.DAILY) }
+    var selectedDuration by remember { mutableStateOf(UiReminderDuration.ONE_WEEK) }
 
     Dialog(
         onDismissRequest = onDismissRequest
@@ -93,9 +92,9 @@ internal fun WordReminderDialog(
 @Composable
 private fun ActionButtons(
     onDismissRequest: () -> Unit,
-    onSetReminder: (ReminderFrequency, ReminderDuration) -> Unit,
-    selectedFrequency: ReminderFrequency,
-    selectedDuration: ReminderDuration
+    onSetReminder: (UiReminderFrequency, UiReminderDuration) -> Unit,
+    selectedFrequency: UiReminderFrequency,
+    selectedDuration: UiReminderDuration
 ) {
     Row(
         horizontalArrangement = Arrangement.End,
@@ -121,15 +120,15 @@ private fun ActionButtons(
 
 @Composable
 private fun FrequencyOptions(
-    selectedFrequency: ReminderFrequency,
-    onSelectFrequency: (ReminderFrequency) -> Unit
+    selectedFrequency: UiReminderFrequency,
+    onSelectFrequency: (UiReminderFrequency) -> Unit
 ) {
     Text(
         text = stringResource(R.string.reminder_frequency_label),
         style = MaterialTheme.typography.labelLarge,
         color = MaterialTheme.colorScheme.onSurface
     )
-    ReminderFrequency.entries.forEach { frequency ->
+    UiReminderFrequency.entries.forEach { frequency ->
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -148,15 +147,15 @@ private fun FrequencyOptions(
 
 @Composable
 private fun DurationOptions(
-    selectedDuration: ReminderDuration,
-    onSelectDuration: (ReminderDuration) -> Unit
+    selectedDuration: UiReminderDuration,
+    onSelectDuration: (UiReminderDuration) -> Unit
 ) {
     Text(
         text = stringResource(R.string.reminder_duration_label),
         style = MaterialTheme.typography.labelLarge,
         color = MaterialTheme.colorScheme.onSurface
     )
-    ReminderDuration.entries.forEach { duration ->
+    UiReminderDuration.entries.forEach { duration ->
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -173,12 +172,12 @@ private fun DurationOptions(
     }
 }
 
-internal enum class ReminderFrequency(@param:StringRes val labelRes: Int) {
+internal enum class UiReminderFrequency(@param:StringRes val labelRes: Int) {
     DAILY(R.string.daily),
     WEEKLY(R.string.weekly),
 }
 
-internal enum class ReminderDuration(@param:StringRes val labelRes: Int) {
+internal enum class UiReminderDuration(@param:StringRes val labelRes: Int) {
     ONE_WEEK(R.string.one_week),
     TWO_WEEKS(R.string.two_weeks),
     ONE_MONTH(R.string.one_month),
