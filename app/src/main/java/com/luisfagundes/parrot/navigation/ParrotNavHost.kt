@@ -4,11 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.luisfagundes.parrot.ui.ParrotAppState
-import com.luisfagundes.dictionary.presentation.translation.navigation.TranslationRoute
-import com.luisfagundes.dictionary.presentation.translation.navigation.translationScreen
-import com.luisfagundes.dictionary.presentation.history.navigation.historyScreen
-import com.luisfagundes.dictionary.presentation.languageselection.navigation.languageSelectionScreen
-import com.luisfagundes.dictionary.presentation.languageselection.navigation.navigateToLanguageSelection
+import com.luisfagundes.translation.presentation.main.navigation.TranslationRoute
+import com.luisfagundes.translation.presentation.main.navigation.translationScreen
+import com.luisfagundes.translation.presentation.history.navigation.historyScreen
+import com.luisfagundes.translation.presentation.languageselection.navigation.languageSelectionScreen
+import com.luisfagundes.translation.presentation.languageselection.navigation.navigateToLanguageSelection
 
 @Composable
 fun ParrotNavHost(

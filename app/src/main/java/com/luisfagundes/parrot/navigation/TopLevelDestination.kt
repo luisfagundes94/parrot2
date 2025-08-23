@@ -7,8 +7,8 @@ import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.Translate
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.luisfagundes.dictionary.presentation.translation.navigation.TranslationRoute
-import com.luisfagundes.dictionary.presentation.history.navigation.HistoryRoute
+import com.luisfagundes.translation.presentation.main.navigation.TranslationRoute
+import com.luisfagundes.translation.presentation.history.navigation.HistoryRoute
 import kotlin.reflect.KClass
 
 enum class TopLevelDestination(
@@ -21,15 +21,15 @@ enum class TopLevelDestination(
     HOME(
         selectedIcon = Icons.Filled.Translate,
         unselectedIcon = Icons.Outlined.Translate,
-        iconTextId = com.luisfagundes.dictionary.R.string.feature_translation_title,
-        titleTextId = com.luisfagundes.dictionary.R.string.feature_translation_title,
+        iconTextId = com.luisfagundes.translation.R.string.feature_translation_title,
+        titleTextId = com.luisfagundes.translation.R.string.feature_translation_title,
         route = TranslationRoute::class,
     ),
     HISTORY(
         selectedIcon = Icons.Filled.History,
         unselectedIcon = Icons.Outlined.History,
-        iconTextId = com.luisfagundes.dictionary.R.string.history_title,
-        titleTextId = com.luisfagundes.dictionary.R.string.history_title,
+        iconTextId = com.luisfagundes.translation.R.string.history_title,
+        titleTextId = com.luisfagundes.translation.R.string.history_title,
         route = HistoryRoute::class,
     ),
 }

@@ -126,14 +126,13 @@ The project includes comprehensive testing at multiple levels:
 
 ### Feature Modules
 
-#### Dictionary (`feature/dictionary/`)
+#### Translation (`feature/Translation/`)
 - **Data Layer**: API services, repositories, mappers for translation data
 - **Domain Layer**: Use cases, models, and business logic for translations
 - **Presentation Layer**: Organized by feature area
-  - `translation/`: Translation screen, ViewModel, and UI components
+  - `main/`: Translation screen, ViewModel, and UI components
   - `history/`: History screen, ViewModel, and UI components
   - `languageselection/`: Language Selection screen, ViewModel, and UI components
-  - `navigation/`: Type-safe navigation setup for dictionary features
 
 ## 🎨 UI/UX
 

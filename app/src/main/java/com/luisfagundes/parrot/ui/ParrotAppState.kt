@@ -13,8 +13,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.luisfagundes.parrot.navigation.TopLevelDestination
-import com.luisfagundes.dictionary.presentation.translation.navigation.navigateToTranslation
-import com.luisfagundes.dictionary.presentation.history.navigation.navigateToHistory
+import com.luisfagundes.translation.presentation.main.navigation.navigateToTranslation
+import com.luisfagundes.translation.presentation.history.navigation.navigateToHistory
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
