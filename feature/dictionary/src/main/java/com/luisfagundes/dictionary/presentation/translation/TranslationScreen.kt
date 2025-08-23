@@ -13,6 +13,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,6 +29,7 @@ import com.luisfagundes.dictionary.R
 import com.luisfagundes.dictionary.domain.model.Word
 import com.luisfagundes.dictionary.presentation.translation.components.ExamplesResult
 import com.luisfagundes.dictionary.presentation.translation.components.LanguageSelector
+import com.luisfagundes.dictionary.presentation.translation.components.WordReminderDialog
 import com.luisfagundes.dictionary.presentation.translation.components.TranslationsResult
 
 @Composable
@@ -62,6 +67,14 @@ internal fun TranslationScreen(
     onInputTextChange: (String) -> Unit,
 ) {
     val textStyle = MaterialTheme.typography.headlineMedium
+    var showWordReminderDialog by rememberSaveable { mutableStateOf(false) }
+
+    if (showWordReminderDialog) {
+        WordReminderDialog(
+            onDismissRequest = { },
+            onSetReminder = { _, _ -> }
+        )
+    }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.default),
@@ -112,6 +125,7 @@ internal fun TranslationScreen(
                 words = uiState.words,
                 isWordInHistory = uiState.isWordInHistory,
                 onSaveWordClick = {
+                    showWordReminderDialog = true
                     onSaveWordClick(
                         uiState.words.first(),
                         uiState.isWordInHistory
