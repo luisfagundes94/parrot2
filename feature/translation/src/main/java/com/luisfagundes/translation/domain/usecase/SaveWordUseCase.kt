@@ -6,7 +6,7 @@ import com.luisfagundes.translation.domain.model.Word
 import com.luisfagundes.translation.domain.repository.WordRepository
 import javax.inject.Inject
 
-internal class SaveWordToHistoryUseCase @Inject constructor(
+internal class SaveWordUseCase @Inject constructor(
     private val repository: WordRepository
 ) {
     suspend operator fun invoke(
