@@ -93,8 +93,11 @@ internal class TranslationViewModel @Inject constructor(
     }
 
     private fun setTranslationResult(words: List<Word>) {
-        if (words.isEmpty()) setErrorState(resourceProvider.getString(R.string.translation_not_found))
-        else setSuccessState(words)
+        if (words.isEmpty()) {
+            setErrorState(resourceProvider.getString(R.string.translation_not_found))
+        } else {
+            setSuccessState(words)
+        }
     }
 
     private fun setLoadingState() {
