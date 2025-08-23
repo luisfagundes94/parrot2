@@ -27,7 +27,7 @@ import com.luisfagundes.translation.R
 import com.luisfagundes.translation.domain.model.SavedWord
 
 @Composable
-internal fun HistoryItem(
+internal fun SavedWordItem(
     word: SavedWord,
     onDelete: (Long) -> Unit,
     modifier: Modifier = Modifier
