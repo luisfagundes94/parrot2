@@ -9,17 +9,17 @@ import com.luisfagundes.translation.domain.model.SaveWordParams
 import com.luisfagundes.translation.domain.model.SavedWord
 import com.luisfagundes.translation.domain.model.TranslationParams
 import com.luisfagundes.translation.domain.model.Word
-import com.luisfagundes.translation.domain.repository.TranslationRepository
+import com.luisfagundes.translation.domain.repository.WordRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-internal class TranslationRepositoryImpl @Inject constructor(
+internal class WordRepositoryImpl @Inject constructor(
     private val dataSource: TranslationDataSource,
     private val localDataSource: LocalTranslationDataSource,
     private val wordMapper: WordMapper,
     private val wordHistoryMapper: WordHistoryMapper
-) : TranslationRepository {
+) : WordRepository {
 
     override fun translate(params: TranslationParams): Flow<List<Word>> {
         val request = TranslationRequest(

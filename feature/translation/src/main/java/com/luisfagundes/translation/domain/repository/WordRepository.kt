@@ -6,7 +6,7 @@ import com.luisfagundes.translation.domain.model.TranslationParams
 import com.luisfagundes.translation.domain.model.Word
 import kotlinx.coroutines.flow.Flow
 
-internal interface TranslationRepository {
+internal interface WordRepository {
     fun translate(params: TranslationParams): Flow<List<Word>>
     
     fun getSavedWords(): Flow<List<SavedWord>>
