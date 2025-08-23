@@ -3,12 +3,12 @@ package com.luisfagundes.translation.data.mapper
 import com.luisfagundes.translation.data.database.entities.SavedTranslationEntity
 import com.luisfagundes.translation.domain.model.SaveWordParams
 import com.luisfagundes.translation.domain.model.SupportedLanguage
-import com.luisfagundes.translation.domain.model.WordHistory
+import com.luisfagundes.translation.domain.model.SavedWord
 import javax.inject.Inject
 
 internal class WordHistoryMapper @Inject constructor() {
-    fun toDomain(source: SavedTranslationEntity): WordHistory {
-        return WordHistory(
+    fun toDomain(source: SavedTranslationEntity): SavedWord {
+        return SavedWord(
             id = source.id,
             query = source.query,
             sourceLanguage = SupportedLanguage.entries.find { it.code == source.sourceLanguage }

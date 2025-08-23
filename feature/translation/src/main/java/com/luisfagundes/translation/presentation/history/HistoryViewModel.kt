@@ -5,7 +5,7 @@ import com.luisfagundes.common.dispatcher.AppDispatcher.IO
 import com.luisfagundes.common.dispatcher.Dispatcher
 import com.luisfagundes.common.presentation.ViewModel
 import com.luisfagundes.common.provider.ResourceProvider
-import com.luisfagundes.translation.domain.model.WordHistory
+import com.luisfagundes.translation.domain.model.SavedWord
 import com.luisfagundes.translation.R
 import com.luisfagundes.translation.domain.usecase.ClearAllSavedWordsUseCase
 import com.luisfagundes.translation.domain.usecase.DeleteSavedWordUseCase
@@ -81,7 +81,7 @@ internal class HistoryViewModel @Inject constructor(
         updateState { state -> state.setError(message) }
     }
 
-    private fun setWords(words: List<WordHistory>) {
+    private fun setWords(words: List<SavedWord>) {
         updateState { state -> state.setWords(words) }
     }
 }

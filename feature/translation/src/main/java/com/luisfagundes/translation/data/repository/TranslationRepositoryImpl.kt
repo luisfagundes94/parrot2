@@ -6,7 +6,7 @@ import com.luisfagundes.translation.data.mapper.WordHistoryMapper
 import com.luisfagundes.translation.data.mapper.WordMapper
 import com.luisfagundes.translation.data.model.request.TranslationRequest
 import com.luisfagundes.translation.domain.model.SaveWordParams
-import com.luisfagundes.translation.domain.model.WordHistory
+import com.luisfagundes.translation.domain.model.SavedWord
 import com.luisfagundes.translation.domain.model.TranslationParams
 import com.luisfagundes.translation.domain.model.Word
 import com.luisfagundes.translation.domain.repository.TranslationRepository
@@ -34,7 +34,7 @@ internal class TranslationRepositoryImpl @Inject constructor(
         }
     }
     
-    override fun getSavedTranslations(): Flow<List<WordHistory>> {
+    override fun getSavedTranslations(): Flow<List<SavedWord>> {
         return localDataSource.getAllSavedTranslations().map { entities ->
             entities.map { entity ->
                 wordHistoryMapper.toDomain(entity)

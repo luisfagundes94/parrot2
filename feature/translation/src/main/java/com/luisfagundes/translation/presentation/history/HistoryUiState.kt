@@ -1,10 +1,10 @@
 package com.luisfagundes.translation.presentation.history
 
 import com.luisfagundes.common.presentation.UiState
-import com.luisfagundes.translation.domain.model.WordHistory
+import com.luisfagundes.translation.domain.model.SavedWord
 
 internal data class HistoryUiState(
-    val words: List<WordHistory> = emptyList(),
+    val words: List<SavedWord> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String = "",
     val showClearAllDialog: Boolean = false
@@ -18,7 +18,7 @@ internal data class HistoryUiState(
         errorMessage = ""
     )
     
-    fun setWords(words: List<WordHistory>) = this.copy(
+    fun setWords(words: List<SavedWord>) = this.copy(
         words = words,
         isLoading = false,
         errorMessage = ""

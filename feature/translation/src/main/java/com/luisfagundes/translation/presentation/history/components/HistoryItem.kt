@@ -24,11 +24,11 @@ import androidx.compose.ui.text.font.FontWeight
 import com.luisfagundes.common.extensions.formatTimestamp
 import com.luisfagundes.designsystem.theme.spacing
 import com.luisfagundes.translation.R
-import com.luisfagundes.translation.domain.model.WordHistory
+import com.luisfagundes.translation.domain.model.SavedWord
 
 @Composable
 internal fun HistoryItem(
-    word: WordHistory,
+    word: SavedWord,
     onDelete: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {

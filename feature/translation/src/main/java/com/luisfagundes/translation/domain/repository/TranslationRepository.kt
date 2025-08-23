@@ -1,7 +1,7 @@
 package com.luisfagundes.translation.domain.repository
 
 import com.luisfagundes.translation.domain.model.SaveWordParams
-import com.luisfagundes.translation.domain.model.WordHistory
+import com.luisfagundes.translation.domain.model.SavedWord
 import com.luisfagundes.translation.domain.model.TranslationParams
 import com.luisfagundes.translation.domain.model.Word
 import kotlinx.coroutines.flow.Flow
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 internal interface TranslationRepository {
     fun translate(params: TranslationParams): Flow<List<Word>>
     
-    fun getSavedTranslations(): Flow<List<WordHistory>>
+    fun getSavedTranslations(): Flow<List<SavedWord>>
     
     suspend fun saveWord(params: SaveWordParams)
     
