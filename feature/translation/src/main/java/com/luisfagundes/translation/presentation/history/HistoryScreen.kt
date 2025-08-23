@@ -34,7 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.luisfagundes.designsystem.theme.spacing
 import com.luisfagundes.translation.R
-import com.luisfagundes.translation.presentation.history.components.HistoryItem
+import com.luisfagundes.translation.presentation.history.components.SavedWordItem
 
 @Composable
 internal fun HistoryRoute(
@@ -121,7 +121,7 @@ internal fun HistoryScreen(
                             items = uiState.words,
                             key = { it.id }
                         ) { word ->
-                            HistoryItem(
+                            SavedWordItem(
                                 word = word,
                                 onDelete = onDeleteWord
                             )
