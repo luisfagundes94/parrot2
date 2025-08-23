@@ -5,20 +5,20 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.luisfagundes.translation.data.database.entities.TranslationHistoryEntity
+import com.luisfagundes.translation.data.database.entities.SavedTranslationEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal interface TranslationHistoryDao {
     
     @Query("SELECT * FROM translation_history ORDER BY timestamp DESC")
-    fun getAllHistory(): Flow<List<TranslationHistoryEntity>>
+    fun getAllHistory(): Flow<List<SavedTranslationEntity>>
     
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTranslation(translation: TranslationHistoryEntity)
+    suspend fun insertTranslation(translation: SavedTranslationEntity)
     
     @Delete
-    suspend fun deleteTranslation(translation: TranslationHistoryEntity)
+    suspend fun deleteTranslation(translation: SavedTranslationEntity)
     
     @Query("DELETE FROM translation_history WHERE id = :id")
     suspend fun deleteTranslationById(id: Long)

@@ -3,11 +3,11 @@ package com.luisfagundes.translation.domain.usecase
 import com.luisfagundes.translation.domain.model.LanguagePair
 import com.luisfagundes.translation.domain.model.SaveWordParams
 import com.luisfagundes.translation.domain.model.Word
-import com.luisfagundes.translation.domain.repository.WordRepository
+import com.luisfagundes.translation.domain.repository.TranslationRepository
 import javax.inject.Inject
 
 internal class SaveWordUseCase @Inject constructor(
-    private val repository: WordRepository
+    private val repository: TranslationRepository
 ) {
     suspend operator fun invoke(
         query: String,
@@ -24,7 +24,7 @@ internal class SaveWordUseCase @Inject constructor(
                 partOfSpeech = word.partOfSpeech,
                 timestamp = System.currentTimeMillis()
             )
-            repository.saveWordToHistory(params)
+            repository.saveWord(params)
         }
     }
 }

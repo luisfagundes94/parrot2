@@ -1,7 +1,7 @@
 package com.luisfagundes.translation.data.datasource.local
 
 import com.luisfagundes.translation.data.database.dao.TranslationHistoryDao
-import com.luisfagundes.translation.data.database.entities.TranslationHistoryEntity
+import com.luisfagundes.translation.data.database.entities.SavedTranslationEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -9,11 +9,11 @@ internal class LocalTranslationDataSourceImpl @Inject constructor(
     private val dao: TranslationHistoryDao
 ) : LocalTranslationDataSource {
     
-    override fun getAllHistory(): Flow<List<TranslationHistoryEntity>> {
+    override fun getAllSavedTranslations(): Flow<List<SavedTranslationEntity>> {
         return dao.getAllHistory()
     }
     
-    override suspend fun insertTranslation(translation: TranslationHistoryEntity) {
+    override suspend fun insertTranslation(translation: SavedTranslationEntity) {
         dao.insertTranslation(translation)
     }
     
@@ -21,7 +21,7 @@ internal class LocalTranslationDataSourceImpl @Inject constructor(
         dao.deleteTranslationById(id)
     }
     
-    override suspend fun deleteAllHistory() {
+    override suspend fun deleteAllTranslationHistory() {
         dao.deleteAllHistory()
     }
 }

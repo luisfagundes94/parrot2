@@ -1,11 +1,11 @@
 package com.luisfagundes.translation.data.datasource.local
 
-import com.luisfagundes.translation.data.database.entities.TranslationHistoryEntity
+import com.luisfagundes.translation.data.database.entities.SavedTranslationEntity
 import kotlinx.coroutines.flow.Flow
 
 internal interface LocalTranslationDataSource {
-    fun getAllHistory(): Flow<List<TranslationHistoryEntity>>
-    suspend fun insertTranslation(translation: TranslationHistoryEntity)
+    fun getAllSavedTranslations(): Flow<List<SavedTranslationEntity>>
+    suspend fun insertTranslation(translation: SavedTranslationEntity)
     suspend fun deleteTranslationById(id: Long)
-    suspend fun deleteAllHistory()
+    suspend fun deleteAllTranslationHistory()
 }

@@ -1,13 +1,13 @@
 package com.luisfagundes.translation.data.mapper
 
-import com.luisfagundes.translation.data.database.entities.TranslationHistoryEntity
+import com.luisfagundes.translation.data.database.entities.SavedTranslationEntity
 import com.luisfagundes.translation.domain.model.SaveWordParams
 import com.luisfagundes.translation.domain.model.SupportedLanguage
 import com.luisfagundes.translation.domain.model.WordHistory
 import javax.inject.Inject
 
 internal class WordHistoryMapper @Inject constructor() {
-    fun toDomain(source: TranslationHistoryEntity): WordHistory {
+    fun toDomain(source: SavedTranslationEntity): WordHistory {
         return WordHistory(
             id = source.id,
             query = source.query,
@@ -23,8 +23,8 @@ internal class WordHistoryMapper @Inject constructor() {
 
     fun toEntity(
         params: SaveWordParams
-    ): TranslationHistoryEntity {
-        return TranslationHistoryEntity(
+    ): SavedTranslationEntity {
+        return SavedTranslationEntity(
             query = params.query,
             sourceLanguage = params.sourceLanguage.code,
             targetLanguage = params.targetLanguage.code,

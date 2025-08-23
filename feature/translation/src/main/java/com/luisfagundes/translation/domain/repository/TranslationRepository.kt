@@ -6,14 +6,14 @@ import com.luisfagundes.translation.domain.model.TranslationParams
 import com.luisfagundes.translation.domain.model.Word
 import kotlinx.coroutines.flow.Flow
 
-internal interface WordRepository {
-    fun getTranslations(params: TranslationParams): Flow<List<Word>>
+internal interface TranslationRepository {
+    fun translate(params: TranslationParams): Flow<List<Word>>
     
-    fun getHistory(): Flow<List<WordHistory>>
+    fun getSavedTranslations(): Flow<List<WordHistory>>
     
-    suspend fun saveWordToHistory(params: SaveWordParams)
+    suspend fun saveWord(params: SaveWordParams)
     
-    suspend fun deleteWordFromHistory(id: Long)
+    suspend fun deleteSavedWord(id: Long)
     
-    suspend fun clearAllHistory()
+    suspend fun clearAllSavedWords()
 }

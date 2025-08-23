@@ -3,10 +3,10 @@ package com.luisfagundes.translation.data.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.luisfagundes.translation.data.database.dao.TranslationHistoryDao
-import com.luisfagundes.translation.data.database.entities.TranslationHistoryEntity
+import com.luisfagundes.translation.data.database.entities.SavedTranslationEntity
 
 @Database(
-    entities = [TranslationHistoryEntity::class],
+    entities = [SavedTranslationEntity::class],
     version = 1,
     exportSchema = false
 )

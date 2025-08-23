@@ -9,19 +9,19 @@ import com.luisfagundes.translation.domain.model.SaveWordParams
 import com.luisfagundes.translation.domain.model.WordHistory
 import com.luisfagundes.translation.domain.model.TranslationParams
 import com.luisfagundes.translation.domain.model.Word
-import com.luisfagundes.translation.domain.repository.WordRepository
+import com.luisfagundes.translation.domain.repository.TranslationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-internal class WordRepositoryImpl @Inject constructor(
+internal class TranslationRepositoryImpl @Inject constructor(
     private val dataSource: TranslationDataSource,
     private val localDataSource: LocalTranslationDataSource,
     private val wordMapper: WordMapper,
     private val wordHistoryMapper: WordHistoryMapper
-) : WordRepository {
+) : TranslationRepository {
 
-    override fun getTranslations(params: TranslationParams): Flow<List<Word>> {
+    override fun translate(params: TranslationParams): Flow<List<Word>> {
         val request = TranslationRequest(
             query = params.query,
             src = params.sourceLanguage,
@@ -34,24 +34,24 @@ internal class WordRepositoryImpl @Inject constructor(
         }
     }
     
-    override fun getHistory(): Flow<List<WordHistory>> {
-        return localDataSource.getAllHistory().map { entities ->
+    override fun getSavedTranslations(): Flow<List<WordHistory>> {
+        return localDataSource.getAllSavedTranslations().map { entities ->
             entities.map { entity ->
                 wordHistoryMapper.toDomain(entity)
             }
         }
     }
     
-    override suspend fun saveWordToHistory(params: SaveWordParams) {
+    override suspend fun saveWord(params: SaveWordParams) {
         val entity = wordHistoryMapper.toEntity(params)
         localDataSource.insertTranslation(entity)
     }
     
-    override suspend fun deleteWordFromHistory(id: Long) {
+    override suspend fun deleteSavedWord(id: Long) {
         localDataSource.deleteTranslationById(id)
     }
     
-    override suspend fun clearAllHistory() {
-        localDataSource.deleteAllHistory()
+    override suspend fun clearAllSavedWords() {
+        localDataSource.deleteAllTranslationHistory()
     }
 }

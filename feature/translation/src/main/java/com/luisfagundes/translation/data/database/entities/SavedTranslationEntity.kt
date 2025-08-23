@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "translation_history")
-internal data class TranslationHistoryEntity(
+internal data class SavedTranslationEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     

@@ -1,12 +1,12 @@
 package com.luisfagundes.translation.domain.usecase
 
-import com.luisfagundes.translation.domain.repository.WordRepository
+import com.luisfagundes.translation.domain.repository.TranslationRepository
 import javax.inject.Inject
 
 internal class DeleteWordFromHistoryUseCase @Inject constructor(
-    private val repository: WordRepository
+    private val repository: TranslationRepository
 ) {
     suspend operator fun invoke(id: Long) {
-        repository.deleteWordFromHistory(id)
+        repository.deleteSavedWord(id)
     }
 }
