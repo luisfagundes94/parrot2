@@ -269,7 +269,7 @@ internal class TranslationViewModelTest {
             viewModel.saveWord(word, isWordInHistory)
 
             val updatedState = awaitItem()
-            assertTrue(updatedState.isWordInHistory)
+            assertTrue(updatedState.isWordSaved)
         }
 
         coVerify {
@@ -321,7 +321,7 @@ internal class TranslationViewModelTest {
             viewModel.saveWord(word, isWordInHistory)
 
             val updatedState = awaitItem()
-            assertTrue(updatedState.isWordInHistory)
+            assertTrue(updatedState.isWordSaved)
         }
 
         coVerify {

@@ -122,12 +122,12 @@ internal fun TranslationScreen(
         if (uiState.words.isNotEmpty()) {
             TranslationsResult(
                 words = uiState.words,
-                isWordInHistory = uiState.isWordInHistory,
+                isWordInHistory = uiState.isWordSaved,
                 onSaveWordClick = {
                     showWordReminderDialog = true
                     onSaveWordClick(
                         uiState.words.first(),
-                        uiState.isWordInHistory
+                        uiState.isWordSaved
                     )
                 }
             )
