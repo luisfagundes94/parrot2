@@ -98,7 +98,6 @@ The project includes comprehensive testing at multiple levels:
 ### Unit Tests
 - **ViewModel Tests**: Complete test coverage for `TranslationViewModel` using MockK and Turbine
 - **Testing Utilities**: Custom test rules and mocks in `core/testing/`
-- **Domain Layer Tests**: Use case and repository tests with comprehensive mocking
 
 ## 📁 Project Structure
 
