@@ -26,4 +26,25 @@
     <string name="word_saved_to_history">Word saved to history</string>
     <string name="select_source_language">Select Source Language</string>
     <string name="select_target_language">Select Target Language</string>
+
+    <!-- Dialog title and description -->
+    <string name="set_reminder_title">Set Word Reminder</string>
+    <string name="reminder_dialog_description">Choose how often and for how long you want to be reminded of this word</string>
+    <string name="reminder_frequency_label">How often?</string>
+    <string name="reminder_duration_label">For how long?</string>
+    <string name="cancel">Cancel</string>
+    <string name="set_reminder">Set Reminder</string>
+
+    <!-- Frequency labels -->
+    <string name="daily">Daily</string>
+    <string name="every_other_day">Every other day</string>
+    <string name="weekly">Weekly</string>
+    <string name="bi_weekly">Bi-weekly</string>
+
+    <!-- Duration labels -->
+    <string name="one_week">1 week</string>
+    <string name="two_weeks">2 weeks</string>
+    <string name="one_month">1 month</string>
+    <string name="three_months">3 months</string>
+    <string name="indefinite">Until I turn it off</string>
 </resources>
