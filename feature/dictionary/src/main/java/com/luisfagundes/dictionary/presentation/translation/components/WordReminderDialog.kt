@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -130,7 +131,12 @@ private fun FrequencyOptions(
     )
     UiReminderFrequency.entries.forEach { frequency ->
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .selectable(
+                    selected = selectedFrequency == frequency,
+                    onClick = { onSelectFrequency(frequency) }
+                ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             RadioButton(
@@ -157,12 +163,17 @@ private fun DurationOptions(
     )
     UiReminderDuration.entries.forEach { duration ->
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .selectable(
+                    selected = selectedDuration == duration,
+                    onClick = { onSelectDuration(duration) }
+                ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             RadioButton(
                 selected = selectedDuration == duration,
-                onClick = { onSelectDuration(duration)}
+                onClick = { onSelectDuration(duration) }
             )
             Text(
                 text = stringResource(duration.labelRes),
