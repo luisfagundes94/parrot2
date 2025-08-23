@@ -3,9 +3,11 @@ package com.luisfagundes.dictionary.presentation
 import app.cash.turbine.test
 import com.luisfagundes.common.provider.ResourceProvider
 import com.luisfagundes.dictionary.R
+import com.luisfagundes.dictionary.domain.model.LanguagePair
 import com.luisfagundes.dictionary.domain.model.SupportedLanguage.English
 import com.luisfagundes.dictionary.domain.model.SupportedLanguage.Portuguese
 import com.luisfagundes.dictionary.domain.model.TranslationParams
+import com.luisfagundes.dictionary.domain.usecase.GetLanguagePairUseCase
 import com.luisfagundes.dictionary.domain.usecase.TranslateWordUseCase
 import com.luisfagundes.dictionary.domain.usecase.SaveWordToHistoryUseCase
 import com.luisfagundes.dictionary.presentation.translation.TranslationUiState
@@ -39,6 +41,7 @@ internal class TranslationViewModelTest {
 
     private val translateWordUseCase = mockk<TranslateWordUseCase>()
     private val saveWordToHistoryUseCase = mockk<SaveWordToHistoryUseCase>()
+    private val getLanguagePairUseCase = mockk<GetLanguagePairUseCase>()
     private val resourceProvider = mockk<ResourceProvider>()
     private val testDispatcher = UnconfinedTestDispatcher()
 
@@ -48,9 +51,14 @@ internal class TranslationViewModelTest {
 
     @Before
     fun setup() {
+        every { getLanguagePairUseCase.invoke() } returns flowOf(
+            LanguagePair(English, Portuguese)
+        )
+
         viewModel = TranslationViewModel(
             translateWordUseCase = translateWordUseCase,
             saveWordToHistoryUseCase = saveWordToHistoryUseCase,
+            getLanguagePairUseCase = getLanguagePairUseCase,
             resourceProvider = resourceProvider,
             dispatcher = testDispatcher
         )
@@ -151,14 +159,14 @@ internal class TranslationViewModelTest {
     fun `swapLanguagePair should swap source and target languages`() = runTest {
         viewModel.uiState.test {
             val initialState = awaitItem()
-            assertEquals(English, initialState.languagePair.first)
-            assertEquals(Portuguese, initialState.languagePair.second)
+            assertEquals(English, initialState.languagePair.sourceLanguage)
+            assertEquals(Portuguese, initialState.languagePair.targetLanguage)
 
             viewModel.swapLanguagePair()
 
             val swappedState = awaitItem()
-            assertEquals(Portuguese, swappedState.languagePair.first)
-            assertEquals(English, swappedState.languagePair.second)
+            assertEquals(Portuguese, swappedState.languagePair.sourceLanguage)
+            assertEquals(English, swappedState.languagePair.targetLanguage)
         }
     }
 
@@ -267,7 +275,7 @@ internal class TranslationViewModelTest {
         coVerify {
             saveWordToHistoryUseCase.invoke(
                 query = initialState.inputText,
-                languagePair = Pair(English, Portuguese),
+                languagePair = LanguagePair(English, Portuguese),
                 word = word
             )
         }
@@ -319,7 +327,7 @@ internal class TranslationViewModelTest {
         coVerify {
             saveWordToHistoryUseCase.invoke(
                 query = inputText,
-                languagePair = Pair(Portuguese, English),
+                languagePair = LanguagePair(Portuguese, English),
                 word = word
             )
         }
