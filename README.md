@@ -32,7 +32,7 @@ parrot/
 │   ├── designsystem/      # UI components, theme, design tokens
 │   └── testing/           # Testing utilities and rules
 └── feature/
-    └── dictionary/         # Dictionary and translation feature implementation
+    └── translation/         # Translation feature implementation
 ```
 
 ### Architecture Patterns
