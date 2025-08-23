@@ -9,6 +9,6 @@ internal class GetAllSavedWordsUseCase @Inject constructor(
     private val repository: TranslationRepository
 ) {
     operator fun invoke(): Flow<List<SavedWord>> {
-        return repository.getSavedTranslations()
+        return repository.getSavedWords()
     }
 }

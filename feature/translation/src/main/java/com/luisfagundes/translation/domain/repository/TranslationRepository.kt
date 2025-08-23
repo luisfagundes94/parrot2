@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 internal interface TranslationRepository {
     fun translate(params: TranslationParams): Flow<List<Word>>
     
-    fun getSavedTranslations(): Flow<List<SavedWord>>
+    fun getSavedWords(): Flow<List<SavedWord>>
     
     suspend fun saveWord(params: SaveWordParams)
     

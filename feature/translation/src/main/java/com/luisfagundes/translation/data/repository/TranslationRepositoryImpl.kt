@@ -34,7 +34,7 @@ internal class TranslationRepositoryImpl @Inject constructor(
         }
     }
     
-    override fun getSavedTranslations(): Flow<List<SavedWord>> {
+    override fun getSavedWords(): Flow<List<SavedWord>> {
         return localDataSource.getAllSavedTranslations().map { entities ->
             entities.map { entity ->
                 wordHistoryMapper.toDomain(entity)
